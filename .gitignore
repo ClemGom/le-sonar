@@ -1,3 +1,10 @@
+# Instantanés de polish, utiles en local, jamais déployés
+index.before-impeccable.html
+index.round*.html
+index.*-before.html
+
+# Notes de travail, à ne pas servir publiquement
+PRODUCT.md
+
 .DS_Store
 Thumbs.db
-*.bak
