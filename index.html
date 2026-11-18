@@ -307,6 +307,23 @@ p{text-wrap:pretty}
 .mbar-cd{margin:0 0 8px;text-align:center;font-size:14px;color:#D8D1C8}
 .mbar-cd .cd{color:var(--amber)}
 
+/* démo vidéo */
+.demo{background:var(--ink-2);border-block:1px solid var(--line)}
+.demo .in{padding-block:56px}
+.yt{position:relative;display:block;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#000;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.8),0 0 0 1px var(--line);text-decoration:none}
+.yt img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.16,.84,.26,1),filter .3s ease}
+.yt::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(11,10,9,.55),rgba(11,10,9,.05) 55%)}
+.yt-play{position:absolute;left:50%;top:50%;z-index:1;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--amber);
+  display:grid;place-items:center;box-shadow:0 0 0 10px rgba(255,138,61,.25),0 12px 30px rgba(0,0,0,.45);transition:transform .2s ease}
+.yt-play svg{width:34px;height:34px;margin-left:4px;fill:#1A0E05}
+.yt-label{position:absolute;left:18px;bottom:14px;z-index:1;color:#F2EEE8;font-weight:700;font-size:15px}
+.yt:hover img{transform:scale(1.02)}
+.yt:hover .yt-play{transform:scale(1.06)}
+.yt:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:520px){.yt-play{width:64px;height:64px;margin:-32px 0 0 -32px}.yt-play svg{width:26px;height:26px}.demo .in{padding-block:40px}}
+
 /* sections claires */
 .light{--ink:#F6F1E9;--ink-2:#EEE6D8;--panel:#FFFDF9;--line:#E2D7C7;--fg:#1A1714;--muted:#574E45;--faint:#6B6257;
   --amber-t:#963A04;--green:#125F32;--red:#C21F27;background:var(--ink);color:var(--fg);color-scheme:light}
@@ -340,6 +357,15 @@ p{text-wrap:pretty}
     </div>
   </div>
 </header>
+
+<section class="band demo" id="demo"><div class="in stack">
+  <h2>Regarde une analyse complète, du signal au verdict</h2>
+  <a class="yt" href="https://youtu.be/hwC6R5AjFx8" target="_blank" rel="noopener" data-yt="hwC6R5AjFx8" aria-label="Lire la vidéo Démo Sonar">
+    <img src="img/demo.webp" width="1280" height="720" alt="Extrait de la démo, une carte du rayon avec ses produits" decoding="async" fetchpriority="high">
+    <span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg></span>
+    <span class="yt-label">Démo Sonar · sur YouTube</span>
+  </a>
+</div></section>
 
 <section class="band light"><div class="in tight stack">
   <h2>Tu peux vérifier en trente secondes</h2>
@@ -568,7 +594,7 @@ p{text-wrap:pretty}
       <p>Ma thèse de départ s'écroule en dix minutes. Et c'est justement cet échec qui me donne la bonne piste.</p></div></div>
     <div class="mk"><span class="verdict v-no">REFUS</span><div>
       <h3>Le rangement de couvercles</h3>
-      <p>Le rayon le plus gros des quatre, et je passe mon tour. C'est celui que je déroule en entier dans la vidéo juste en dessous.</p></div></div>
+      <p>Le rayon le plus gros des quatre, et je passe mon tour. C'est celui que je déroule en entier dans la vidéo, en haut de la page.</p></div></div>
     <div class="mk"><span class="verdict v-yes">PLACE</span><div>
       <h3>L'esthétique non servie</h3>
       <p>Beaucoup de recherches, presque personne en face. L'écho le plus creux des quatre.</p></div></div>
@@ -577,10 +603,6 @@ p{text-wrap:pretty}
       <p>Une vraie faille dans le rayon, tuée par le coût de la publicité. Je la garde sous le coude.</p></div></div>
   </div>
   <p class="lead mt-s"><b>Le refus et le report</b> comptent autant que les deux places. Une méthode qui dit toujours oui ne te protège de rien.</p>
-  <a class="video" href="https://youtu.be/hwC6R5AjFx8" target="_blank" rel="noopener">
-    <span class="play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg></span>
-    <span><b>Voir une analyse complète en vidéo</b><br><span class="muted sub">Sur YouTube, gratuit</span></span>
-  </a>
 </div></section>
 
 <section class="band alt"><div class="in stack">
@@ -759,6 +781,26 @@ p{text-wrap:pretty}
   <p class="mbar-cd">Prévente <b>199 €</b> · fin dans <span class="cd" data-cd></span></p>
   <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
 </div>
+
+<script>
+/* Demo : la vignette est un lien YouTube. Avec JS, le clic charge le lecteur sur place. */
+(function () {
+  var a = document.querySelector('.yt[data-yt]');
+  if (!a) return;
+  a.addEventListener('click', function (e) {
+    e.preventDefault();
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + a.getAttribute('data-yt') + '?autoplay=1&rel=0';
+    f.title = 'Démo Sonar';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    var box = document.createElement('div');
+    box.className = 'yt';
+    box.appendChild(f);
+    a.replaceWith(box);
+  });
+})();
+</script>
 
 <script>
 /* Compte a rebours de la prevente. Sans JS, la date en clair suffit. */
