@@ -29,10 +29,9 @@ seraient publiquement accessibles.
 
 ## État au 18 novembre 2026
 
-Trois blocs `class="todo"` sont encore dans la page et **visibles par les
+Deux blocs `class="todo"` sont encore dans la page et **visibles par les
 visiteurs** :
 
-- le lien de la vidéo de démonstration, qui pointe encore vers la chaîne
 - l'emplacement des témoignages
 - **les deux boutons d'achat, qui pointent vers `#`**
 
