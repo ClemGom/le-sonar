@@ -27,6 +27,9 @@ suffit pas : il faut aussi que chacun pousse ce qu'il change.
 sont dans `.gitignore`. Ils restent en local. Ne les suis pas dans Git, ils
 seraient publiquement accessibles.
 
+Ce `CLAUDE.md` est suivi dans Git mais n'est pas servi : la commande de build
+de `netlify.toml` le supprime avant la mise en ligne. Garde cette commande.
+
 ## État au 18 novembre 2026
 
 Deux blocs `class="todo"` sont encore dans la page et **visibles par les
@@ -35,5 +38,5 @@ visiteurs** :
 - l'emplacement des témoignages
 - **les deux boutons d'achat, qui pointent vers `#`**
 
-Le troisième est bloquant pour un lancement. Tant qu'il est là, la page ne
+Le second est bloquant pour un lancement. Tant qu'il est là, la page ne
 devrait pas être indexée.

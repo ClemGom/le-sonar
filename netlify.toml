@@ -2,6 +2,8 @@
 
 [build]
   publish = "."
+  # Les notes internes du dépôt ne doivent pas être servies sur le site.
+  command = "rm -f CLAUDE.md"
 
 # Les images ne changent jamais une fois publiées : cache long.
 [[headers]]
