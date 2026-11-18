@@ -297,13 +297,9 @@ p{text-wrap:pretty}
 .cd{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 .presale .cd:empty{display:none}
 .big s.was{font-size:24px;font-weight:700;color:var(--faint);margin-left:8px;vertical-align:middle;text-decoration-thickness:2px}
-.timeline{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.timeline li{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:16px}
-.timeline li b{font-size:16px}
-.timeline li span{color:var(--muted)}
-.timeline li.now{border-color:rgba(255,138,61,.6);background:rgba(255,138,61,.08)}
-.timeline .cd{display:block;margin-top:4px;color:var(--amber-t)}
-@media (max-width:720px){.timeline{grid-template-columns:1fr}}
+.deadline{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-weight:700;color:var(--amber-t);margin-top:-6px;text-wrap:wrap}
+.deadline .cd{padding:3px 9px;border-radius:6px;background:rgba(255,138,61,.14)}
+.deadline .cd:empty{display:none}
 .incl{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px;color:var(--fg)}
 .incl li{position:relative;padding-left:26px}
 .incl li::before{content:"";position:absolute;left:2px;top:.45em;width:12px;height:7px;border-left:2.5px solid var(--green);border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
@@ -673,8 +669,6 @@ p{text-wrap:pretty}
       <p>Cette méthode est récente. Elle n'existait pas il y a un an, parce qu'elle repose sur des outils d'IA qui viennent de sortir. Lire des milliers d'avis, de posts et de fiches en une soirée, personne ne pouvait le faire à la main.</p>
       <p>C'est avec elle que je choisis mes prochains produits. Et mes élèves en coaching l'utilisent déjà pour trouver les leurs.</p>
       <p class="kick">Ce que tu apprends ici, je l'utilise pour mes propres lancements.</p>
-      <p class="muted">Mon coaching, c'est 2 500 € pour 12 heures à mes côtés, du choix du produit jusqu'au lancement. Le Sonar ne remplace pas ça. C'est uniquement l'étape de recherche, que tu fais seul, à ton rythme.</p>
-      <p class="muted">Et je sors une niche chiffrée par semaine dans ma newsletter, devant 1 600 personnes.</p>
       <p class="todo">Emplacement témoignages, à remplir après les premiers accompagnements.</p>
     </div>
   </div>
@@ -704,11 +698,7 @@ p{text-wrap:pretty}
 
 <section class="band light alt" id="offre"><div class="in stack">
   <h2>Seul, ou avec ma validation</h2>
-  <ol class="timeline" aria-label="Calendrier de la prévente">
-    <li><b>Dès l'achat</b><span>Les trois outils, à installer tout de suite</span></li>
-    <li class="now"><b>Dimanche 29 novembre, 23 h 59</b><span>Fin du prix de prévente <span class="cd" data-cd></span></span></li>
-    <li><b>Jeudi 10 décembre</b><span>Les six modules vidéo et les quatre analyses</span></li>
-  </ol>
+  <p class="deadline">Prix de prévente jusqu'au dimanche 29 novembre, 23 h 59. <span class="cd" data-cd></span></p>
   <div class="grid2 mt-s">
     <div class="card price-card hi">
       <p class="slots">Prix de prévente, jusqu'au 29 novembre</p>
