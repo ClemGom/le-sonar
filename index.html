@@ -117,8 +117,9 @@ a:focus-visible{outline:2px solid var(--amber-t);outline-offset:3px;border-radiu
 .qual li{list-style:none;padding-left:26px;position:relative;color:var(--muted);font-size:16px}
 .qual li+li{margin-top:12px}
 .qual li::before{position:absolute;left:0;top:0;font-weight:800}
-.no li::before{content:"×";color:var(--red);font-size:17px}
-.yes li::before{content:"✓";color:var(--green);font-size:14px}
+.qual li::before{content:"";top:.4em;width:14px;height:14px}
+.no li::before{background:linear-gradient(45deg,transparent 43%,var(--red) 43% 57%,transparent 57%),linear-gradient(-45deg,transparent 43%,var(--red) 43% 57%,transparent 57%)}
+.yes li::before{left:2px;width:12px;height:7px;border-left:2.5px solid var(--green);border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
 ul{margin:0;padding:0}
 
 /* prix */
@@ -238,7 +239,7 @@ p{text-wrap:pretty}
   transform:translateY(110%);transition:transform .32s cubic-bezier(.16,.84,.26,1)}
 .mbar .cta{width:100%;justify-content:center;align-self:stretch;padding:14px 20px;font-size:17px}
 .mbar.on{transform:none}
-@media (max-width:720px){.mbar{display:block}}
+.mbar{display:block}
 
 
 /* qui te parle */
@@ -304,7 +305,14 @@ p{text-wrap:pretty}
 .incl li{position:relative;padding-left:26px}
 .incl li::before{content:"";position:absolute;left:2px;top:.45em;width:12px;height:7px;border-left:2.5px solid var(--green);border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
 .pitch{font-size:18px;font-weight:800;line-height:1.35}
-.mbar-cd{margin:0 0 8px;text-align:center;font-size:14px;color:#D8D1C8}
+.after{font-size:14px;color:var(--muted);margin-top:-6px;text-align:center}
+@media (max-width:520px){.presale-date{display:none}}
+[data-post]{display:none}
+.ended [data-pre]{display:none!important}
+.ended [data-post]{display:block}
+.mbar-cd{margin:0 0 6px;text-align:center;font-size:13px;color:#D8D1C8}
+@media (min-width:721px){.mbar-in{max-width:880px;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}.mbar-cd{margin:0;text-align:left;font-size:15px}.mbar .cta{width:auto;padding:12px 22px;font-size:16px}}
+@media (max-width:720px){.mbar{padding-top:8px}.mbar .cta{padding:12px 18px;font-size:16px}}
 .mbar-cd .cd{color:var(--amber)}
 
 /* démo vidéo */
@@ -317,7 +325,7 @@ p{text-wrap:pretty}
 .yt-play{position:absolute;left:50%;top:50%;z-index:1;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--amber);
   display:grid;place-items:center;box-shadow:0 0 0 10px rgba(255,138,61,.25),0 12px 30px rgba(0,0,0,.45);transition:transform .2s ease}
 .yt-play svg{width:34px;height:34px;margin-left:4px;fill:#1A0E05}
-.yt-label{position:absolute;left:18px;bottom:14px;z-index:1;color:#F2EEE8;font-weight:700;font-size:15px}
+.yt-label{position:absolute;left:16px;bottom:14px;z-index:1;color:#F2EEE8;font-weight:700;font-size:15px;background:rgba(11,10,9,.82);padding:5px 10px;border-radius:6px}
 .yt:hover img{transform:scale(1.02)}
 .yt:hover .yt-play{transform:scale(1.06)}
 .yt:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
@@ -342,7 +350,7 @@ p{text-wrap:pretty}
 </head>
 <body>
 
-<div class="presale" role="note"><div class="presale-in"><span class="presale-tag">Prévente</span><span class="presale-txt"><b>199 €</b> au lieu de <s>299 €</s> jusqu'au dimanche 29 novembre, 23 h 59</span><span class="cd" data-cd aria-label="Temps restant"></span></div></div>
+<div class="presale" role="note" data-pre><div class="presale-in"><span class="presale-tag">Prévente</span><span class="presale-txt"><b>199 €</b> au lieu de <s>299 €</s><span class="presale-date"> jusqu'au dimanche 29 novembre, 23 h 59</span></span><span class="cd" data-cd aria-label="Temps restant"></span></div></div>
 
 <header class="band hero">
   <div class="rings" aria-hidden="true"></div>
@@ -352,8 +360,9 @@ p{text-wrap:pretty}
     <p class="lead">Toi et des milliers d'autres, vous payez le même outil et vous cochez les mêmes cases. Forcément, vous trouvez la même chose.</p>
     <p class="lead">Le Sonar, c'est la méthode que j'utilise pour chercher ailleurs. Tu ressors avec une idée de produit que les autres n'ont pas vue, vérifiée avant de mettre un euro dans le stock.</p>
     <div class="stack-s mt-s">
-      <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
-      <p class="undercta">Prix de prévente, <s>299 €</s> à la sortie. Les trois outils tout de suite, les vidéos le jeudi 10 décembre.</p>
+      <a class="cta" href="#offre">Je prends Le Sonar <span class="price" data-p>199 €</span></a>
+      <p class="undercta" data-pre>Prix de prévente, <s>299 €</s> à la sortie. Les trois outils tout de suite, les vidéos le jeudi 10 décembre.</p>
+      <p class="undercta" data-post>Les trois outils tout de suite, les vidéos le jeudi 10 décembre.</p>
     </div>
   </div>
 </header>
@@ -603,6 +612,10 @@ p{text-wrap:pretty}
       <p>Une vraie faille dans le rayon, tuée par le coût de la publicité. Je la garde sous le coude.</p></div></div>
   </div>
   <p class="lead mt-s"><b>Le refus et le report</b> comptent autant que les deux places. Une méthode qui dit toujours oui ne te protège de rien.</p>
+  <div class="stack-s mid-cta">
+    <a class="cta" href="#offre">Je prends Le Sonar <span class="price" data-p>199 €</span></a>
+    <p class="undercta">Remboursé si tu ne trouves aucune idée de produit</p>
+  </div>
 </div></section>
 
 <section class="band alt"><div class="in stack">
@@ -647,7 +660,7 @@ p{text-wrap:pretty}
   </div>
   <p class="lead">La troisième colonne est la seule où c'est toi qui tranches. Tout ce qui est avant est de la récolte, tout ce qui est après est du calcul, et c'est ce tri-là que tu sauras faire à la fin.</p>
   <div class="stack-s mid-cta">
-    <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+    <a class="cta" href="#offre">Je prends Le Sonar <span class="price" data-p>199 €</span></a>
     <p class="undercta">Remboursé si tu ne trouves aucune idée de produit</p>
   </div>
 </div></section>
@@ -660,7 +673,7 @@ p{text-wrap:pretty}
       <div><h3>Six modules vidéo</h3><p>De l'installation jusqu'à la carte finale. Le module 4 est le cœur, c'est celui qui t'apprend à repérer un écho creux et à le chiffrer.</p>
       <p class="mods">0. Installer le sonar<br>1. Le ping et l'écho<br>2. Où envoyer le ping<br>3. Le test de réalité<br>4. Lire l'écho<br>5. La carte et la barrière (ce qui empêche le suivant d'entrer derrière toi)</p></div></div>
 
-    <div class="get"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9.5l3 2.5-3 2.5M13.5 15H17"/></svg>
+    <div class="get"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="9.6" opacity=".5"/></svg>
       <div><h3>Les trois outils, prêts à installer</h3><p><b>/le-point</b> cadre ta recherche, <b>/le-ping</b> récolte les pistes, <b>/le-recif</b> évalue le marché. Trois minutes d'installation chacun. Ils tournent sur tes propres accès, et ils refusent de démarrer sans données réelles.</p></div></div>
 
     <div class="get"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11.5" height="11.5" rx="2.5"/><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.5a2 2 0 0 0 2 2h2.5"/></svg>
@@ -671,7 +684,7 @@ p{text-wrap:pretty}
 
   </div>
   <div class="stack-s mid-cta">
-    <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+    <a class="cta" href="#offre">Je prends Le Sonar <span class="price" data-p>199 €</span></a>
     <p class="undercta">Remboursé si tu ne trouves aucune idée de produit</p>
   </div>
 </div></section>
@@ -720,14 +733,20 @@ p{text-wrap:pretty}
 
 <section class="band light alt" id="offre"><div class="in stack">
   <h2>Seul, ou avec ma validation</h2>
-  <p class="deadline">Prix de prévente jusqu'au dimanche 29 novembre, 23 h 59. <span class="cd" data-cd></span></p>
+  <p class="deadline" data-pre>Prix de prévente jusqu'au dimanche 29 novembre, 23 h 59. <span class="cd" data-cd></span></p>
   <div class="grid2 mt-s">
     <div class="card price-card hi">
-      <p class="slots">Prix de prévente, jusqu'au 29 novembre</p>
       <h3>Le Sonar</h3>
-      <p class="big">199 € <s class="was">299 €</s></p>
-      <p class="muted">Les six modules, les quatre analyses, <b>les trois outils</b>, la grille de décision et tous les prompts. Accès à vie, mises à jour comprises.</p>
-      <a class="cta" href="#">Je prends Le Sonar <span class="price">199 €</span></a>
+      <p class="big"><span data-p>199 €</span> <s class="was" data-pre>299 €</s></p>
+      <ul class="incl">
+        <li>Les trois outils, à installer dès l'achat</li>
+        <li>Les six modules vidéo, le jeudi 10 décembre</li>
+        <li>Les quatre marchés analysés de bout en bout</li>
+        <li>La grille de décision et tous les prompts</li>
+        <li>Accès à vie, mises à jour comprises</li>
+      </ul>
+      <a class="cta" href="#">Je prends Le Sonar <span class="price" data-p>199 €</span></a>
+      <p class="after">Accès immédiat à ton espace, avec les trois outils. Remboursé si tu ne trouves aucune idée de produit.</p>
     </div>
     <div class="card price-card">
       <p class="slots">10 places</p>
@@ -741,11 +760,11 @@ p{text-wrap:pretty}
       <p class="pitch">Tu ne mets pas 8 000 € dans un stock sans un deuxième avis.</p>
       <p class="muted">Au tarif de mon coaching, l'heure de visio seule vaut plus de 200 €.</p>
       <a class="cta ghost" href="#">Je prends la validation <span class="price">399 €</span></a>
+      <p class="after">Remboursé si tu ne trouves aucune idée de produit.</p>
     </div>
   </div>
   <div class="guar-strip" id="garantie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.6"/></svg><span><b>Trouve une idée, ou remboursé.</b> Sur les deux options. Applique la méthode, et si tu ne trouves aucune idée de produit, je te rembourse. Les conditions exactes sont dans les CGV.</span></div>
   <p class="fine"><b>Ce que je ne garantis pas, c'est une vente.</b> Ce que je contrôle, c'est que la méthode te sorte des idées à évaluer, et c'est là-dessus que je m'engage.</p>
-  <p class="fine"><b>199 €, c'est le prix de prévente.</b> Tu as les trois outils tout de suite, les vidéos le jeudi 10 décembre, et le prix passe à 299 € le lundi 30 novembre.</p>
   <p class="fine"><b>Dix places sur la validation.</b> Lire dix analyses et y répondre me prend deux heures par personne. Quand les dix sont prises, je ferme au lieu de bâcler.</p>
   <p class="todo">Les deux boutons pointent vers « # ». À relier au paiement Schoolmaker ou Stripe.</p>
 </div></section>
@@ -753,7 +772,7 @@ p{text-wrap:pretty}
 <section class="band light"><div class="in stack">
   <h2>Ce qu'on me demande</h2>
   <div class="mt-s">
-    <details><summary>Quand est-ce que j'ai accès ?</summary><p>Les trois outils tout de suite après l'achat, pour commencer à chercher. Les six modules vidéo et les quatre analyses le jeudi 10 décembre. C'est une prévente, d'où le prix.</p></details>
+    <details><summary>Quand est-ce que j'ai accès ?</summary><p>Tu accèdes tout de suite à ton espace, avec les trois outils pour commencer à chercher. Les six modules vidéo et les quatre analyses le jeudi 10 décembre. <span data-pre>C'est une prévente, d'où le prix.</span></p></details>
     <details><summary>Il faut savoir coder ?</summary><p>Non, et tu n'écriras jamais une ligne de code. Tu colles une clé, tu te connectes, et tu poses tes questions en français. Le premier module montre chaque clic, sans accéléré.</p></details>
     <details><summary>C'est encore un truc à base d'IA ?</summary><p>L'IA, c'est la plomberie. Ce qui change ta recherche, c'est d'avoir plus de sources que les seules données Amazon. L'IA sert à traiter ce volume sans y passer la semaine, et c'est tout.</p><p>Elle ne décide rien non plus. Les trois outils refusent même de démarrer sans données réelles, parce qu'un outil qui invente des chiffres fait plus de dégâts que pas d'outil du tout.</p></details>
     <details><summary>Ça coûte combien en plus ?</summary><p><b>Une cinquantaine d'euros par mois</b>, pour les trois accès que la méthode demande. L'IA, un accès aux données Amazon, et un accès aux sources hors d'Amazon. Il te faut aussi un ordinateur.</p><p>Si tu me vois annoncer une fourchette plus large ailleurs, c'est qu'elle couvre toute ma panoplie de vendeur. Le Sonar n'a besoin que de ces trois-là.</p><p>On travaille dans l'onglet Code de l'application Claude, parce que c'est le seul endroit où tes résultats deviennent des fichiers et tes prompts des raccourcis. Le nom fait peur, le contenu non.</p></details>
@@ -770,17 +789,17 @@ p{text-wrap:pretty}
     <h2>La prochaine fois que tu ouvres ton outil</h2>
     <p class="lead">Tu peux recocher les mêmes cases et retomber sur les mêmes trente produits. Ou tu peux passer une soirée à chercher là où personne ne regarde, et commander en sachant pourquoi.</p>
     <div class="stack-s">
-      <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+      <a class="cta" href="#offre">Je prends Le Sonar <span class="price" data-p>199 €</span></a>
       <p class="undercta">Remboursé si tu ne trouves aucune idée de produit</p>
     </div>
     <p class="undercta mt-m">Clément · Stupid Seller</p>
   </div>
 </footer>
 
-<div class="mbar" id="mbar" inert>
-  <p class="mbar-cd">Prévente <b>199 €</b> · fin dans <span class="cd" data-cd></span></p>
-  <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
-</div>
+<div class="mbar" id="mbar" inert><div class="mbar-in">
+  <p class="mbar-cd" data-pre>Prévente <b>199 €</b> · fin dans <span class="cd" data-cd></span></p>
+  <a class="cta" href="#offre">Je prends Le Sonar <span class="price" data-p>199 €</span></a>
+</div></div>
 
 <script>
 /* Demo : la vignette est un lien YouTube. Avec JS, le clic charge le lecteur sur place. */
@@ -811,14 +830,16 @@ p{text-wrap:pretty}
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function tick() {
     var left = end - Date.now();
-    var txt;
-    if (left <= 0) { txt = 'Prévente terminée'; }
-    else {
-      var d = Math.floor(left / 864e5), h = Math.floor(left / 36e5) % 24, m = Math.floor(left / 6e4) % 60, sec = Math.floor(left / 1e3) % 60;
-      txt = (d ? d + '\u202fj ' : '') + pad(h) + '\u202fh ' + pad(m) + '\u202fmin ' + pad(sec) + '\u202fs';
+    if (left <= 0) {
+      document.documentElement.classList.add('ended');
+      [].slice.call(document.querySelectorAll('[data-p]')).forEach(function (e) { e.textContent = '299 €'; });
+      return;
     }
+    var d = Math.floor(left / 864e5), h = Math.floor(left / 36e5) % 24, m = Math.floor(left / 6e4) % 60, sec = Math.floor(left / 1e3) % 60;
+    var txt = d ? d + ' j ' + pad(h) + ' h ' + pad(m) + ' min'
+                : pad(h) + ' h ' + pad(m) + ' min ' + pad(sec) + ' s';
     els.forEach(function (e) { e.textContent = txt; });
-    if (left > 0) setTimeout(tick, 1000);
+    setTimeout(tick, d ? 30000 : 1000);
   }
   tick();
 })();
