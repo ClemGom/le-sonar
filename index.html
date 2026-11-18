@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Le Sonar · Trouve ton prochain produit Amazon ailleurs que sur Amazon</title>
+<meta name="description" content="Trouve ton prochain produit Amazon là où tes concurrents ne cherchent pas. Six modules, trois outils, quatre marchés analysés de bout en bout.">
+<meta property="og:title" content="Le Sonar">
+<meta property="og:description" content="Trouve ton prochain produit Amazon là où tes concurrents ne cherchent pas.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B0A09">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<style>
+:root{
+  --ink:#0B0A09; --ink-2:#121110; --panel:#171512; --line:#2A2622;
+  --fg:#F2EEE8; --muted:#9A9186; --faint:#8C8378;
+  --amber:#FF8A3D; --amber-dim:#E8641E; --red:#F0434A; --green:#39C46E;
+  --display:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  --amber-t:#FF8A3D;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ink);color:var(--fg);font-family:var(--display);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;margin:0}
+.band{width:100%}
+.in{max-width:880px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:68px}
+.in.tight{padding-block:48px}
+h1,h2,h3{text-wrap:balance;margin:0;letter-spacing:-.02em;line-height:1.12}
+h1,h2{font-stretch:72%;letter-spacing:-.005em;line-height:1.02}
+h2{font-size:clamp(34px,4.8vw,48px);font-weight:850}
+h3{font-size:clamp(21px,2.2vw,24px);font-weight:800;letter-spacing:-.015em;line-height:1.2}
+p{margin:0}
+a{color:inherit}
+.stack{display:flex;flex-direction:column;gap:20px}
+.stack-s{display:flex;flex-direction:column;gap:12px}
+.stepname{font-size:16px;font-weight:700;color:var(--amber-t);margin-top:10px;letter-spacing:.01em}
+.lead{font-size:20px;line-height:1.55;color:var(--fg)}
+.muted{color:var(--muted)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--ink)}
+.rings{position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 78% 42%, rgba(255,138,61,.16) 0 1px, transparent 1px),
+    repeating-radial-gradient(circle at 78% 42%, transparent 0 58px, rgba(255,138,61,.07) 58px 59px),
+    radial-gradient(circle at 78% 42%, rgba(232,100,30,.20), transparent 62%);
+  mask-image:linear-gradient(to bottom, #000 35%, transparent 100%)}
+.hero .in{position:relative;padding-block:92px 72px}
+.foot{border-top:1px solid var(--line)}
+.foot .rings{opacity:.55}
+.foot .lead{max-width:var(--measure)}
+.wordmark{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;letter-spacing:-.01em;color:var(--fg)}
+.wordmark svg{width:22px;height:22px;flex:none;color:var(--amber-t);fill:none;stroke:currentColor;stroke-width:1.6}
+h1{font-size:clamp(42px,6.4vw,64px);font-weight:900;max-width:var(--measure)}
+.hero .lead{max-width:var(--measure)}
+
+/* cta */
+.cta{display:inline-flex;align-items:center;gap:12px;background:var(--amber);color:#1A0E05;
+  font-weight:700;font-size:18px;padding:16px 28px;border-radius:10px;text-decoration:none;
+  border:0;cursor:pointer;transition:transform .12s ease,background .12s ease;align-self:flex-start}
+.cta:hover{background:#FFA062;transform:translateY(-1px)}
+.cta:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.cta.ghost{background:transparent;color:var(--amber-t);box-shadow:inset 0 0 0 1.5px rgba(255,138,61,.6)}
+.cta.ghost:hover{background:rgba(255,138,61,.1)}
+.cta.ghost .price{border-left-color:rgba(255,138,61,.35)}
+a:focus-visible{outline:2px solid var(--amber-t);outline-offset:3px;border-radius:4px}
+.link{color:var(--amber-t);text-underline-offset:3px}
+::selection{background:rgba(255,138,61,.35);color:var(--fg)}
+.mt-s{margin-top:8px}.mt-m{margin-top:24px}
+.amber{color:var(--amber-t)}
+.cta .price{font-variant-numeric:tabular-nums;font-weight:800;padding-left:12px;border-left:1px solid rgba(26,14,5,.25)}
+.undercta{font-size:14px;color:var(--faint)}
+.mid-cta{margin-top:12px}
+
+/* bandes */
+.alt{background:var(--ink-2);border-block:1px solid var(--line)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:16px}
+.grid2>*,.grid3>*{min-width:0}
+
+/* le test */
+.test{background:var(--panel);border:1px solid rgba(255,138,61,.32);border-radius:14px;padding:20px 24px}
+.test ol{margin:0;padding-left:22px;font-size:18px;font-weight:600;color:var(--fg)}
+.test li::marker{color:var(--amber-t);font-weight:800}
+.test li+li{margin-top:7px}
+
+/* étapes */
+.step h3{margin-top:10px}
+.step p{margin-top:8px;color:var(--muted);font-size:16px}
+.step .ex{margin-top:10px;font-size:16px;color:var(--fg)}
+
+/* icônes */
+.ico{width:26px;height:26px;flex:none;color:var(--amber-t);stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ce que tu reçois */
+.get{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding-block:20px;border-top:1px solid var(--line)}
+.get:last-child{border-bottom:1px solid var(--line)}
+.get p{color:var(--muted);font-size:16px;margin-top:5px}
+.get .mods{font-size:16px;color:var(--faint);margin-top:9px;line-height:1.75;font-variant-numeric:tabular-nums}
+
+/* marchés */
+.mk .verdict{justify-self:stretch;text-align:center}
+.mk{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:start;padding-block:22px;border-top:1px solid var(--line)}
+.verdict{font-size:13px;font-weight:800;letter-spacing:.08em;padding:5px 10px;border-radius:6px;white-space:nowrap}
+.v-yes{background:rgba(57,196,110,.14);color:var(--green);border:1px solid rgba(57,196,110,.3)}
+.v-no{background:#E5242B;color:#fff;border:1px solid #E5242B;transform:rotate(-2deg)}
+.v-wait{background:rgba(255,138,61,.14);color:var(--amber-t);border:1px solid rgba(255,138,61,.35)}
+.mk:last-child{border-bottom:1px solid var(--line)}
+.mk p{color:var(--muted);font-size:16px;margin-top:7px}
+.mk b{color:var(--fg);font-variant-numeric:tabular-nums}
+.mk .teach{margin-top:10px;font-size:16px;color:var(--fg)}
+.mk .teach b{color:var(--amber-t);font-weight:600}
+
+/* listes */
+.qual li{list-style:none;padding-left:26px;position:relative;color:var(--muted);font-size:16px}
+.qual li+li{margin-top:12px}
+.qual li::before{position:absolute;left:0;top:0;font-weight:800}
+.no li::before{content:"×";color:var(--red);font-size:17px}
+.yes li::before{content:"✓";color:var(--green);font-size:14px}
+ul{margin:0;padding:0}
+
+/* prix */
+.price-card{display:flex;flex-direction:column;gap:16px}
+.price-card.hi{border-color:rgba(255,138,61,.45);box-shadow:0 0 0 1px rgba(255,138,61,.12)}
+.price-card .muted{font-size:16px}
+.price-card .cta{margin-top:auto}
+.cta{white-space:nowrap}
+@media (max-width:520px){.price-card{padding:20px}.price-card .cta{font-size:16px;padding:15px 18px;gap:10px;align-self:stretch;justify-content:space-between}.price-card .cta .price{padding-left:10px}}
+.price-card .slots+h3{margin-top:-6px}
+.guar-strip{display:flex;gap:14px;align-items:flex-start;text-decoration:none;border:1px solid rgba(57,196,110,.35);background:rgba(57,196,110,.05);border-radius:12px;padding:14px 18px;font-size:16px;color:var(--muted)}
+.guar-strip b{color:var(--green)}
+.guar-strip u{color:var(--fg);text-underline-offset:3px}
+.guar-strip svg{width:24px;height:24px;flex:none;color:var(--green);fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.fine{font-size:16px;color:var(--muted)}
+.big{font-size:52px;font-weight:900;font-stretch:72%;letter-spacing:-.01em;line-height:1;font-variant-numeric:tabular-nums}
+.slots{font-size:14px;font-weight:600;color:var(--amber-t)}
+
+/* garantie */
+.guar{border:1px solid rgba(57,196,110,.35);background:rgba(57,196,110,.05);border-radius:14px;padding:24px}
+.guar h3{color:var(--green)}
+
+/* faq */
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;padding:18px 0;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--amber-t);font-size:24px;font-weight:600;line-height:1;flex:none}
+details[open] summary::after{content:"−"}
+details p{padding-bottom:18px;color:var(--muted);font-size:16px;max-width:68ch}
+details p+p{margin-top:-8px}
+.qual-h{margin-bottom:16px}
+.qual-h.no-h{color:var(--red)}
+.qual-h.yes-h{color:var(--green)}
+.footer-in{position:relative}
+summary:focus-visible{outline:2px solid var(--amber-t);outline-offset:2px}
+
+/* vidéo */
+.video{display:flex;gap:18px;align-items:center;text-decoration:none;border:1px solid var(--line);
+  background:var(--panel);border-radius:14px;padding:18px 22px;transition:border-color .12s ease}
+.video:hover{border-color:rgba(255,138,61,.5)}
+.play{flex:none;width:42px;height:42px;border-radius:50%;background:var(--amber);display:grid;place-items:center;color:#1A0E05}
+.play svg{width:16px;height:16px;margin-left:2px;fill:currentColor}
+.video .sub{font-size:16px}
+.todo{font-family:var(--mono);font-size:12px;color:var(--faint);border:1px dashed var(--line);border-radius:8px;padding:10px 12px}
+
+/* carte du rayon */
+.carte{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 20px 16px}
+.carte.fnl{padding:26px 20px 18px}
+.carte svg{width:100%;height:auto;display:block}
+.leg{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;font-size:16px;color:var(--muted)}
+.leg span{display:flex;align-items:center;gap:9px}
+.leg i{width:11px;height:11px;border-radius:50%;flex:none}
+@media (max-width:640px){.carte{padding:16px 10px 12px}}
+.zones,.fnl-cols{display:none}
+@media (max-width:620px){
+  .carte .zl{display:none}
+  .carte .ax{font-size:30px}
+  .zones{display:grid;gap:10px;margin:14px 4px 0;font-size:16px;list-style:none}
+  .zones li{padding-left:14px;border-left:2px solid var(--z)}
+  .zones b{display:block;color:var(--z)}
+  .zones span{color:var(--muted)}
+  .fnl .lbl{display:none}
+  .fnl .num{font-size:46px}
+  .fnl svg{margin-bottom:-22px}
+  .fnl-cols{display:grid;grid-template-columns:repeat(5,1fr);padding:2px 4.6% 0 4.9%;list-style:none;text-align:center}
+  .fnl-cols li{font-size:13px;line-height:1.3;color:#D8D1C8;padding-inline:2px}
+  .fnl-cols code{display:block;margin-top:4px;font-family:inherit;font-size:11.5px;font-weight:700;color:var(--faint)}
+  .fnl-cols li:not(.me) code{white-space:nowrap}
+  .fnl-cols .me code{color:var(--fg)}
+}
+.steph{display:flex;gap:18px;align-items:flex-start}
+.steph>div{min-width:0}
+.steph h2{margin-top:2px}
+.steph .node{width:64px;height:64px;margin-top:-4px}
+@media (max-width:520px){.steph .node{width:52px;height:52px}.steph{gap:14px}}
+.fnl.anim rect.bar{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(.03);
+  transition:transform .8s cubic-bezier(.16,.84,.26,1)}
+.fnl.anim.on rect.bar{transform:scaleY(1)}
+.fnl.anim rect.win{filter:drop-shadow(0 0 0 rgba(57,196,110,0));
+  transition:transform .8s cubic-bezier(.16,.84,.26,1),filter .6s ease .55s}
+.fnl.anim.on rect.win{filter:drop-shadow(0 0 11px rgba(57,196,110,.5))}
+.fnl.anim rect.gate{opacity:0;transition:opacity .6s ease}
+.fnl.anim.on rect.gate{opacity:1}
+.fnl.anim .lbl{opacity:0;transition:opacity .55s ease}
+.fnl.anim.on .lbl{opacity:1}
+
+/* lecture */
+:root{--measure:640px}
+.stack>p,.stack>.lead,.stack>.kick,.stack>ul{max-width:var(--measure)}
+.stack>.kick{margin-top:10px}
+.stack>h2+p,.steph+p{margin-top:-4px}
+.lead.strong{font-weight:800}
+p{text-wrap:pretty}
+.kick{font-size:clamp(22px,2.6vw,26px);font-weight:800;letter-spacing:-.02em;line-height:1.28}
+
+/* figures avec libellés HTML */
+.fig{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+.fig .plot{position:relative}
+.fig svg{display:block;width:100%;height:auto}
+.fig .t{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:clamp(12px,1.75vw,14.5px);color:var(--muted);line-height:1.2;text-align:center}
+.fig .t.hi{color:var(--fg);font-weight:700}
+.fig .t.am{color:var(--amber-t);font-weight:700}
+.fig .t.gr{color:var(--green);font-weight:700}
+.fig .leg{margin-top:12px}
+.leg .dash{width:16px;height:0;border-top:1.5px dashed rgba(255,138,61,.7);border-radius:0}
+@media (max-width:560px){.fig{padding:14px 8px}.fig .t.opt{display:none}.fig .t.edge{left:var(--mx)!important;top:var(--my)!important;transform:translate(-100%,-50%)}}
+
+
+/* noeuds sonar */
+.node{flex:none;fill:none;stroke:var(--amber);stroke-width:1.4}
+.node .core{fill:var(--amber);stroke:none}
+.node text{fill:#1A0E05;stroke:none;font-family:var(--display);font-weight:800;font-size:12px}
+
+/* barre mobile */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;padding:10px max(12px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(11,10,9,.92);border-top:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transform:translateY(110%);transition:transform .32s cubic-bezier(.16,.84,.26,1)}
+.mbar .cta{width:100%;justify-content:center;align-self:stretch;padding:14px 20px;font-size:17px}
+.mbar.on{transform:none}
+@media (max-width:720px){.mbar{display:block}}
+
+
+/* qui te parle */
+.who{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:start}
+.who-pic{position:relative;isolation:isolate}
+.who-pic::before{content:"";position:absolute;inset:8% -6% 18% -6%;z-index:-1;
+  background:radial-gradient(closest-side,rgba(255,138,61,.42),rgba(232,100,30,.12) 60%,transparent)}
+.who-pic img.me{display:block;width:100%;height:auto;
+  -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent);mask-image:linear-gradient(to bottom,#000 72%,transparent)}
+.proof{margin:0;background:#FBF8F3;color:#1A1714;border-radius:12px;padding:10px 10px 12px;
+  box-shadow:0 18px 40px -12px rgba(0,0,0,.65),0 2px 6px rgba(0,0,0,.35)}
+.proof img{display:block;width:100%;height:auto;border-radius:6px}
+.proof figcaption{background:#FBF8F3;font-size:14px;line-height:1.35;margin-top:9px;padding-inline:4px;color:#4A433C}
+.proof figcaption b{color:#1A1714}
+.who .proof{width:68%;margin:-26% 0 0 auto;transform:rotate(2.2deg);position:relative}
+@media (max-width:720px){
+  .who{grid-template-columns:1fr;gap:8px}
+  .who-pic{max-width:330px}
+  .who .proof{width:62%;margin-top:-30%}
+}
+
+/* /le-point en conversation */
+.chat{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px 16px 18px;font-size:16px;
+  box-shadow:0 1px 0 rgba(26,23,20,.04),0 14px 34px -22px rgba(26,23,20,.4)}
+.chat-head{display:flex;align-items:center;gap:10px;padding:0 4px 12px;margin-bottom:12px;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
+.chat-head b{color:var(--fg);font-size:16px}
+.chat-av{width:30px;height:30px;border-radius:50%;background:#1A1714;display:grid;place-items:center;flex:none}
+.chat-av svg{width:18px;height:18px;fill:none;stroke:#FF8A3D;stroke-width:1.6}
+.chat-body{display:flex;flex-direction:column;gap:10px}
+.ln{margin:0;line-height:1.45;max-width:84%}
+.ln.q,.reply{align-self:flex-start;background:#F1EADF;color:var(--fg);padding:10px 14px;border-radius:18px 18px 18px 6px}
+.ln.a{align-self:flex-end;background:var(--amber);color:#1A0E05;font-weight:600;padding:10px 14px;border-radius:18px 18px 6px 18px;max-width:72%}
+.reply{display:flex;flex-direction:column;gap:8px;max-width:92%;margin-top:4px}
+.reply p{margin:0}
+.reply .next{font-weight:700;color:var(--amber-t)}
+.chat mark{background:rgba(255,138,61,.28);color:#5A2604;font-weight:700;border-radius:4px;padding:0 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.chat.anim .ln{opacity:0;transform:translateY(6px) scale(.98);transform-origin:left bottom;transition:opacity .3s ease,transform .35s cubic-bezier(.16,.84,.26,1)}
+.chat.anim .ln.a{transform-origin:right bottom}
+.chat.anim .ln.shown{opacity:1;transform:none}
+.chat .ln.a.typing::after{content:"";display:inline-block;width:2px;height:1.05em;margin-left:2px;vertical-align:-3px;background:#1A0E05;animation:blink .9s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.term-note{display:flex;justify-content:flex-end;gap:12px;align-items:center;font-size:14px;color:var(--faint);margin-top:10px}
+.replay{font:inherit;font-size:14px;font-weight:600;color:var(--amber-t);background:none;border:0;padding:10px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.replay:focus-visible{outline:2px solid var(--amber-t);outline-offset:3px;border-radius:4px}
+@media (max-width:520px){.ln{max-width:92%}.ln.a{max-width:80%}.chat{padding:12px 10px 14px}}
+
+.signals{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-width:var(--measure)}
+.signals li{position:relative;padding:12px 16px 12px 44px;background:var(--panel);border:1px solid var(--line);border-radius:12px;font-weight:600}
+.signals li::before{content:"";position:absolute;left:16px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px rgba(255,138,61,.18),0 0 0 8px rgba(255,138,61,.08)}
+/* prévente */
+.presale{background:var(--amber);color:#1A0E05}
+.presale-in{max-width:880px;margin-inline:auto;padding:9px max(16px,env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;font-size:15px;text-align:center}
+.presale-tag{font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:13px;background:#1A0E05;color:var(--amber);padding:3px 9px;border-radius:5px}
+.presale s{opacity:.7}
+@media (max-width:520px){.presale-in{font-size:13.5px;gap:2px 10px;padding-block:7px}.presale-tag{display:none}}
+.cd{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.presale .cd:empty{display:none}
+.big s.was{font-size:24px;font-weight:700;color:var(--faint);margin-left:8px;vertical-align:middle;text-decoration-thickness:2px}
+.timeline{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.timeline li{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:16px}
+.timeline li b{font-size:16px}
+.timeline li span{color:var(--muted)}
+.timeline li.now{border-color:rgba(255,138,61,.6);background:rgba(255,138,61,.08)}
+.timeline .cd{display:block;margin-top:4px;color:var(--amber-t)}
+@media (max-width:720px){.timeline{grid-template-columns:1fr}}
+.incl{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px;color:var(--fg)}
+.incl li{position:relative;padding-left:26px}
+.incl li::before{content:"";position:absolute;left:2px;top:.45em;width:12px;height:7px;border-left:2.5px solid var(--green);border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
+.pitch{font-size:18px;font-weight:800;line-height:1.35}
+.mbar-cd{margin:0 0 8px;text-align:center;font-size:14px;color:#D8D1C8}
+.mbar-cd .cd{color:var(--amber)}
+
+/* sections claires */
+.light{--ink:#F6F1E9;--ink-2:#EEE6D8;--panel:#FFFDF9;--line:#E2D7C7;--fg:#1A1714;--muted:#574E45;--faint:#6B6257;
+  --amber-t:#963A04;--green:#125F32;--red:#C21F27;background:var(--ink);color:var(--fg);color-scheme:light}
+.light.alt{background:var(--ink-2)}
+.light .card,.light .video,.light .test{box-shadow:0 1px 0 rgba(26,23,20,.04),0 8px 24px -16px rgba(26,23,20,.25)}
+.light .fig,.light .carte{--panel:#171512;--line:#2A2622;--fg:#F2EEE8;--muted:#9A9186;--faint:#8C8378;--amber-t:#FF8A3D;--green:#39C46E;--red:#F0434A;
+  color:var(--fg);box-shadow:0 18px 40px -24px rgba(26,23,20,.55)}
+.light .todo{border-color:#CDBFAB}
+.light ::selection{background:rgba(255,138,61,.3);color:#1A1714}
+
+@media (max-width:520px){body{font-size:17px}.lead{font-size:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}
+  .fnl.anim rect.bar{transform:none}
+  .fnl.anim rect.gate,.fnl.anim .lbl{opacity:1}}
+</style>
+</head>
+<body>
+
+<div class="presale" role="note"><div class="presale-in"><span class="presale-tag">Prévente</span><span class="presale-txt"><b>199 €</b> au lieu de <s>299 €</s> jusqu'au dimanche 29 novembre, 23 h 59</span><span class="cd" data-cd aria-label="Temps restant"></span></div></div>
+
+<header class="band hero">
+  <div class="rings" aria-hidden="true"></div>
+  <div class="in stack">
+    <p class="wordmark"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10" opacity=".45"/></svg>Le Sonar</p>
+    <h1>Tu retombes toujours sur les mêmes produits. C'est normal.</h1>
+    <p class="lead">Toi et des milliers d'autres, vous payez le même outil et vous cochez les mêmes cases. Forcément, vous trouvez la même chose.</p>
+    <p class="lead">Le Sonar, c'est la méthode que j'utilise pour chercher ailleurs. Tu ressors avec une idée de produit que les autres n'ont pas vue, vérifiée avant de mettre un euro dans le stock.</p>
+    <div class="stack-s mt-s">
+      <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+      <p class="undercta">Prix de prévente, <s>299 €</s> à la sortie. Les trois outils tout de suite, les vidéos le jeudi 10 décembre.</p>
+    </div>
+  </div>
+</header>
+
+<section class="band light"><div class="in tight stack">
+  <h2>Tu peux vérifier en trente secondes</h2>
+  <p>Ouvre ton outil de recherche produit, peu importe lequel. Black Box, Xray, l'onglet de ton abonnement. Et coche ces quatre cases.</p>
+  <div class="test">
+    <ol>
+      <li>Prix entre 20 et 50 €</li>
+      <li>Moins de 500 avis</li>
+      <li>Marge au-dessus de 30 %</li>
+      <li>Plus de 300 ventes par mois</li>
+    </ol>
+  </div>
+  <p class="kick">Tu la connais déjà, cette liste.</p>
+  <p class="muted">Tu l'as vue il y a trois mois. Le gars qui a pris son abonnement hier la voit aussi. Ces quatre filtres sont ceux de toutes les formations, donc tout le monde arrive sur la même page de résultats et se bat pour les trente mêmes produits.</p>
+</div></section>
+
+<section class="band"><div class="in stack">
+  <h2>Ton outil ne connaît qu'Amazon</h2>
+  <p class="lead">Et c'est logique, hein. Il est branché sur Amazon, il lit Amazon, il te sort ce qui se vend sur Amazon.</p>
+  <p>Le souci, c'est ce qu'il ne peut pas voir. Les gens qui pestent contre un produit sur un forum, une mode qui monte ailleurs, un style que personne ne propose, des clients qui achètent faute de mieux. Rien de tout ça n'apparaît dans un filtre. Ça y apparaîtra le jour où quelqu'un d'autre l'aura exploité, c'est-à-dire trop tard pour toi.</p>
+  <p>Tant que tu pars d'Amazon, tu ne peux trouver <b>que ce que les autres ont déjà trouvé</b>. Ton outil est très bien. Il regarde juste par le même trou que tous les autres.</p>
+  <figure class="fig" aria-label="Ton outil ne regarde qu'Amazon. Les signaux qui comptent sont en dehors de son champ.">
+    <div class="plot">
+    <svg viewBox="0 0 680 330" aria-hidden="true">
+      <polygon points="98,158 470,118 470,212 98,172" fill="rgba(255,138,61,.09)"/>
+      <line x1="98" y1="158" x2="470" y2="118" stroke="rgba(255,138,61,.6)" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <line x1="98" y1="172" x2="470" y2="212" stroke="rgba(255,138,61,.6)" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <circle cx="70" cy="165" r="27" fill="#1D1A16" stroke="#FF8A3D" stroke-width="1.5"/>
+      <circle cx="66" cy="161" r="9" fill="none" stroke="#FF8A3D" stroke-width="2"/>
+      <line x1="72.5" y1="167.5" x2="80" y2="175" stroke="#FF8A3D" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="470" y="100" width="182" height="130" rx="12" fill="#1D1A16" stroke="#3A342D"/>
+      <g fill="#4A443D">
+        <circle cx="502" cy="132" r="6"/><circle cx="541" cy="132" r="6"/><circle cx="580" cy="132" r="6"/><circle cx="619" cy="132" r="6"/>
+        <circle cx="502" cy="165" r="6"/><circle cx="541" cy="165" r="6"/><circle cx="580" cy="165" r="6"/><circle cx="619" cy="165" r="6"/>
+        <circle cx="502" cy="198" r="6"/><circle cx="541" cy="198" r="6"/><circle cx="580" cy="198" r="6"/><circle cx="619" cy="198" r="6"/>
+      </g>
+      <g fill="#FF8A3D">
+        <circle cx="205" cy="62" r="7"/><circle cx="352" cy="36" r="5"/><circle cx="300" cy="270" r="7"/>
+        <circle cx="430" cy="300" r="5"/><circle cx="596" cy="40" r="7"/><circle cx="168" cy="292" r="5"/>
+      </g>
+      <g fill="none" stroke="#FF8A3D" opacity=".3">
+        <circle cx="205" cy="62" r="15"/><circle cx="300" cy="270" r="15"/><circle cx="596" cy="40" r="15"/>
+      </g>
+    </svg>
+    <span class="t hi" style="left:10.3%;top:69%">Ton outil</span>
+    <span class="t hi" style="left:82.6%;top:79%">Amazon</span>
+    <span class="t am opt" style="left:30.1%;top:33%">un forum</span>
+    <span class="t am" style="left:44.1%;top:93%">une impression 3D</span>
+    <span class="t am edge" style="left:83%;top:22%;--mx:99%;--my:24%">un réseau d'images</span>
+    </div>
+    <div class="leg">
+      <span><i class="dash"></i> Ce que ton outil voit</span>
+      <span><i style="background:#FF8A3D"></i> Ce que ton outil ne voit pas</span>
+    </div>
+  </figure>
+
+  <p class="lead strong mt-m">Et au bout de six mois, tu as passé des dizaines d'heures à chercher, pour rien.</p>
+  <p class="muted">Toujours les mêmes daubes en boucle. Et le jour où une idée a l'air bonne, tu commandes en même temps que dix vendeurs qui ont vu la même chose que toi. Ton stock arrive dans un rayon qui a triplé. À la fin, tu te dis qu'Amazon est saturé et que tu arrives trop tard.</p>
+  <p class="lead amber strong">Franchement ? Non.</p>
+  <p>Les marchés que je t'ouvre en entier plus bas, je ne les ai trouvés dans aucun filtre. L'un vient d'un bricoleur qui a imprimé sa solution un dimanche, l'autre d'un réseau d'images. Aucun n'était saturé, ils étaient juste ailleurs.</p>
+  <p class="kick mt-m">Ton outil sait très bien te dire si un marché vaut le coup. Il ne sait pas te dire où chercher.</p>
+  <p>Il ne voit que des chiffres de ventes. Donc on inverse l'ordre. <b>On cherche dehors, et on vérifie sur Amazon.</b></p>
+</div></section>
+
+<section class="band light" id="etape-1"><div class="in stack">
+  <div class="steph">
+    <svg class="node" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="19" opacity="0.75"/><circle class="core" cx="32" cy="32" r="12"/><text x="32" y="36.5" text-anchor="middle">01</text></svg>
+    <div>
+      <h2>On part de ce que tu connais mieux que les autres</h2>
+      <p class="stepname">Le Point</p>
+    </div>
+  </div>
+  <p class="lead">Avant de chercher quoi que ce soit, on cadre. Quatre questions sur ce que tu connais mieux que les autres, ton budget, et ton marché.</p>
+  <div class="term-wrap">
+  <div class="chat" id="term" aria-label="Exemple de conversation avec Le Point, quatre questions puis sa réponse">
+    <div class="chat-head" aria-hidden="true"><span class="chat-av"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.4" fill="#FF8A3D" stroke="none"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="9.6" opacity=".45"/></svg></span><b>Le Point</b><span>dans Claude</span></div>
+    <div class="chat-body">
+      <p class="ln q">Qu'est-ce que tu connais mieux que la moyenne des gens ?</p>
+      <p class="ln a">Je suis menuisier, c'est mon métier.</p>
+      <p class="ln q">Combien tu peux mettre en tout sur un premier produit, stock et pub compris ?</p>
+      <p class="ln a">8 000 €</p>
+      <p class="ln q">Sur quel Amazon tu veux vendre ?</p>
+      <p class="ln a">France</p>
+      <p class="ln q">Tu vends déjà sur Amazon, ou pas encore ?</p>
+      <p class="ln a">Pas encore</p>
+      <div class="ln reply">
+        <p><mark>Menuisier</mark>, c'est ton meilleur atout. Les menuisiers bricolent eux-mêmes ce qu'ils ne trouvent pas, et ils en parlent entre eux. Je commence par lire L'Air du Bois et Copain des Copeaux.</p>
+        <p>Avec <mark>8 000 €</mark>, vise des produits entre 53 et 71 €. Au-dessus, tu ne pourras pas commander assez de stock pour tenir.</p>
+        <p>On jugera tout sur <mark>Amazon.fr</mark>, ton propre rayon.</p>
+        <p class="next">Prochaine étape, Le Ping.</p>
+      </div>
+    </div>
+  </div>
+  <div class="term-note"><button class="replay" type="button" id="replay" hidden>Rejouer</button></div>
+  </div>
+  <p class="muted">Et tu pars de ce que tu connais déjà. Un infirmier, un grimpeur, un menuisier voient des problèmes que personne d'autre ne voit, et ça, personne ne peut te le copier.</p>
+  <p class="kick">Tu ressors avec un cadre. Où chercher, à quel prix, et ce que tu refuses d'avance.</p>
+</div></section>
+
+<section class="band light alt" id="etape-2"><div class="in stack">
+  <div class="steph">
+    <svg class="node" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="19" opacity="0.75"/><circle cx="32" cy="32" r="25" opacity="0.55"/><circle class="core" cx="32" cy="32" r="12"/><text x="32" y="36.5" text-anchor="middle">02</text></svg>
+    <div>
+      <h2>Plein d'idées que personne n'a filtrées</h2>
+      <p class="stepname">Le Ping</p>
+    </div>
+  </div>
+  <p class="lead">Tu vas chercher là où ton outil ne regarde pas. N'importe quelle source où les gens parlent de ce qu'ils achètent, de ce qu'ils détestent, de ce qu'ils voudraient. Tu chasses un de ces cinq signaux.</p>
+  <ul class="signals">
+    <li>Ce qui monte ailleurs avant d'arriver sur Amazon</li>
+    <li>Beaucoup de demande, et presque personne en face</li>
+    <li>Des vendeurs qui gagnent malgré des fiches ratées</li>
+    <li>Des produits qui vendent et que personne n'aime</li>
+    <li>Des rayons au design figé depuis des années</li>
+  </ul>
+    <p>C'est ça, le ping. Tu envoies le signal, et tu écoutes ce qui revient.</p>
+  <figure class="fig" aria-label="Le ping part vers des sources hors d'Amazon. Un écho revient d'une impression 3D vers un rayon Amazon à plus de 180 000 dollars par mois.">
+    <div class="plot">
+    <svg viewBox="0 0 680 330" aria-hidden="true">
+      <g fill="none" stroke="#FF8A3D">
+        <path d="M110 125 A 50 50 0 0 1 110 205" stroke-width="1.6" opacity=".8"/>
+        <path d="M130 95 A 82 82 0 0 1 130 235" stroke-width="1.4" opacity=".5"/>
+        <path d="M150 65 A 115 115 0 0 1 150 265" stroke-width="1.2" opacity=".28"/>
+      </g>
+      <g stroke="rgba(255,138,61,.35)" stroke-width="1.4" stroke-dasharray="4 6">
+        <line x1="90" y1="165" x2="318" y2="72"/>
+        <line x1="90" y1="165" x2="318" y2="258"/>
+        <line x1="90" y1="165" x2="368" y2="165"/>
+      </g>
+      <circle cx="80" cy="165" r="11" fill="#FF8A3D"/>
+      <circle cx="330" cy="68" r="8" fill="#4A443D"/>
+      <circle cx="330" cy="262" r="8" fill="#4A443D"/>
+      <circle cx="380" cy="165" r="22" fill="none" stroke="#FF8A3D" opacity=".35"/>
+      <circle cx="380" cy="165" r="10" fill="#FF8A3D"/>
+      <line x1="396" y1="165" x2="520" y2="165" stroke="#39C46E" stroke-width="2"/>
+      <path d="M512 159 L522 165 L512 171" fill="none" stroke="#39C46E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="528" y="120" width="128" height="90" rx="12" fill="rgba(57,196,110,.08)" stroke="#39C46E" stroke-width="1.4"/>
+    </svg>
+    <span class="t am" style="left:11.8%;top:64%">Le Ping</span>
+    <span class="t" style="left:48.5%;top:12%">un forum</span>
+    <span class="t" style="left:48.5%;top:88%">un réseau d'images</span>
+    <span class="t am" style="left:55.9%;top:68%">une impression 3D</span>
+    <span class="t hi edge" style="left:87.6%;top:43%;--mx:99%;--my:27%">un rayon Amazon</span>
+    <span class="t gr edge" style="left:87.6%;top:56%;--mx:99%;--my:73%">+180 000 $/mois</span>
+    </div>
+  </figure>
+  <p>Un exemple réel, que tu suis en entier dans la formation. Un type poste le rangement qu'il a imprimé en 3D un dimanche, parce qu'il en avait marre de ses couvercles de casseroles. Vingt minutes plus tard, j'ai en face de moi un rayon Amazon dont les vingt premiers produits font <b>plus de 180 000 $ par mois</b>.</p>
+  <p class="muted">Aucun filtre ne m'aurait emmené là. Il n'y avait rien à filtrer, le signal n'était pas sur Amazon.</p>
+  <p class="kick">Dix à quinze pistes par soirée, et t'es le seul à les avoir.</p>
+</div></section>
+
+<section class="band light" id="etape-3"><div class="in stack">
+  <div class="steph">
+    <svg class="node" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="19" opacity="0.75"/><circle cx="32" cy="32" r="25" opacity="0.55"/><circle cx="32" cy="32" r="31" opacity="0.35"/><circle class="core" cx="32" cy="32" r="12"/><text x="32" y="36.5" text-anchor="middle">03</text></svg>
+    <div>
+      <h2>Un gros rayon peut quand même être un piège</h2>
+      <p class="stepname">Le Récif</p>
+    </div>
+  </div>
+  <p class="lead">Là, tu reviens sur Amazon, cette fois pour juger.</p>
+  <p>Le Récif passe chaque piste au crible. La taille du rayon, la marge qu'il reste une fois la pub payée, la place pour un nouveau, et ce qui te protégera quand d'autres arriveront.</p>
+  <p>Une condition qui tombe, et la piste s'arrête là. <b>Tu passes à la suivante sans avoir dépensé un euro.</b></p>
+    <p class="muted">Pour trancher, tu sors la carte du rayon.</p>
+  <div class="carte">
+    <svg viewBox="0 0 680 430" role="img" aria-label="Carte du rayon, ventes mensuelles en fonction du nombre d'avis">
+      <rect x="72" y="36" width="255" height="150" fill="#39C46E" opacity=".10" rx="8"/>
+      <rect x="412" y="36" width="238" height="150" fill="#FF8A3D" opacity=".10" rx="8"/>
+      <rect x="412" y="232" width="238" height="130" fill="#F0434A" opacity=".10" rx="8"/>
+      <line x1="72" y1="362" x2="660" y2="362" stroke="#2A2622" stroke-width="1.5"/>
+      <line x1="72" y1="30" x2="72" y2="362" stroke="#2A2622" stroke-width="1.5"/>
+      <circle cx="150" cy="300" r="5" fill="#4A443D"/>
+      <circle cx="196" cy="330" r="5" fill="#4A443D"/>
+      <circle cx="243" cy="276" r="5" fill="#4A443D"/>
+      <circle cx="290" cy="316" r="5" fill="#4A443D"/>
+      <circle cx="340" cy="248" r="5" fill="#4A443D"/>
+      <circle cx="360" cy="330" r="5" fill="#4A443D"/>
+      <circle cx="383" cy="200" r="5" fill="#4A443D"/>
+      <circle cx="390" cy="290" r="5" fill="#4A443D"/>
+      <circle cx="250" cy="218" r="5" fill="#4A443D"/>
+      <circle cx="355" cy="130" r="5" fill="#4A443D"/>
+      <circle cx="395" cy="96" r="5" fill="#4A443D"/>
+      <circle cx="470" cy="76" r="7.5" fill="#FF8A3D"/>
+      <circle cx="530" cy="104" r="7.5" fill="#FF8A3D"/>
+      <circle cx="600" cy="64" r="7.5" fill="#FF8A3D"/>
+      <circle cx="450" cy="318" r="6.5" fill="#F0434A"/>
+      <circle cx="510" cy="302" r="6.5" fill="#F0434A"/>
+      <circle cx="570" cy="338" r="6.5" fill="#F0434A"/>
+      <circle cx="618" cy="310" r="6.5" fill="#F0434A"/>
+      <circle cx="140" cy="96" r="9" fill="#39C46E"/>
+      <circle cx="232" cy="68" r="9" fill="#39C46E"/>
+      <text class="zl" x="88" y="152" fill="#39C46E" font-size="19" font-weight="700">Ce que tu cherches</text>
+      <text class="zl" x="88" y="172" fill="#9A9186" font-size="16">peu d'avis, et déjà des ventes</text>
+      <text class="zl" x="428" y="152" fill="#FF8A3D" font-size="19" font-weight="700">Les gros installés</text>
+      <text class="zl" x="428" y="172" fill="#9A9186" font-size="16">ils amènent les acheteurs</text>
+      <text class="zl" x="428" y="258" fill="#F0434A" font-size="19" font-weight="700">La saturation</text>
+      <text class="zl" x="428" y="278" fill="#9A9186" font-size="16">beaucoup d'avis, peu de ventes</text>
+      <text class="ax" x="366" y="400" fill="#9A9186" font-size="17" text-anchor="middle">Nombre d'avis</text>
+      <text class="ax" x="92" y="382" fill="#8C8378" font-size="14">peu</text>
+      <text class="ax" x="645" y="382" fill="#8C8378" font-size="14" text-anchor="end">beaucoup</text>
+      <text class="ax" x="0" y="0" fill="#9A9186" font-size="17" text-anchor="middle" transform="translate(26,196) rotate(-90)">Ventes par mois</text>
+    </svg>
+    <ul class="zones">
+      <li style="--z:#39C46E"><b>Ce que tu cherches</b><span>peu d'avis, et déjà des ventes</span></li>
+      <li style="--z:#FF8A3D"><b>Les gros installés</b><span>ils amènent les acheteurs</span></li>
+      <li style="--z:#F0434A"><b>La saturation</b><span>beaucoup d'avis, peu de ventes</span></li>
+    </ul>
+    <div class="leg">
+      <span><i style="background:#39C46E"></i> Les entrants qui prouvent la porte</span>
+      <span><i style="background:#FF8A3D"></i> Les grandes marques</span>
+      <span><i style="background:#F0434A"></i> Ceux qui ont travaillé pour rien</span>
+      <span><i style="background:#4A443D"></i> Le reste du rayon</span>
+    </div>
+  </div>
+  <p>Chaque point est un produit déjà en vente, et la lecture se fait en deux temps. <b>Personne en haut à gauche</b>, et le rayon n'accueille plus de nouveaux. <b>Deux ou trois marques récentes</b>, et tu sais que tu peux entrer.</p>
+  <p class="muted">Mais s'ils sont dix, la porte est devenue un couloir. Tu peux entrer, et rien ne se refermera derrière toi. C'est là que la plupart des gens commandent quand même.</p>
+  <p>Et si elle tient, tu sais ce que ça te coûtera vraiment d'y entrer, et tu passes à la suite, le fournisseur.</p>
+  <p class="kick">À la fin, une idée qui tient, et tu sais pourquoi.</p>
+</div></section>
+
+<section class="band light alt"><div class="in stack">
+  <h2>Sur quatre marchés, je n'en garde que deux</h2>
+  <p class="muted">Tu les suis de bout en bout dans la formation, impasses comprises.</p>
+  <div class="mt-s">
+    <div class="mk"><span class="verdict v-yes">PLACE</span><div>
+      <h3>La céramique</h3>
+      <p>Ma thèse de départ s'écroule en dix minutes. Et c'est justement cet échec qui me donne la bonne piste.</p></div></div>
+    <div class="mk"><span class="verdict v-no">REFUS</span><div>
+      <h3>Le rangement de couvercles</h3>
+      <p>Le rayon le plus gros des quatre, et je passe mon tour. C'est celui que je déroule en entier dans la vidéo juste en dessous.</p></div></div>
+    <div class="mk"><span class="verdict v-yes">PLACE</span><div>
+      <h3>L'esthétique non servie</h3>
+      <p>Beaucoup de recherches, presque personne en face. L'écho le plus creux des quatre.</p></div></div>
+    <div class="mk"><span class="verdict v-wait">REPORTÉ</span><div>
+      <h3>La recherche scientifique</h3>
+      <p>Une vraie faille dans le rayon, tuée par le coût de la publicité. Je la garde sous le coude.</p></div></div>
+  </div>
+  <p class="lead mt-s"><b>Le refus et le report</b> comptent autant que les deux places. Une méthode qui dit toujours oui ne te protège de rien.</p>
+  <a class="video" href="https://www.youtube.com/@stupidseller" target="_blank" rel="noopener">
+    <span class="play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg></span>
+    <span><b>Voir une analyse complète en vidéo</b><br><span class="muted sub">Sur YouTube, gratuit</span></span>
+  </a>
+  <p class="todo">Lien à remplacer par la vidéo de démonstration quand elle est publiée.</p>
+</div></section>
+
+<section class="band alt"><div class="in stack">
+  <h2>Au bout de la soirée, il te reste une idée qui tient</h2>
+  <p class="muted">Tu ne finis pas avec trente produits à départager. Tu finis avec un, et tu sais pourquoi les autres sont morts.</p>
+  <div class="carte fnl">
+    <svg viewBox="0 0 680 310" role="img" aria-label="Entonnoir, 500 éléments lus deviennent une idée qui tient">
+      <line x1="40" y1="246" x2="650" y2="246" stroke="#2A2622" stroke-width="1.5"/>
+
+      <rect class="bar" style="transition-delay:0ms" x="52" y="66" width="86" height="180" rx="5" fill="#FF8A3D" opacity=".28"/>
+      <text class="num" data-to="500" x="95" y="52" fill="#F2EEE8" font-size="27" font-weight="800" text-anchor="middle">500</text>
+      <text class="lbl" style="transition-delay:260ms" x="95" y="268" fill="#D8D1C8" font-size="14.5" text-anchor="middle">éléments lus</text>
+      <text class="lbl" style="transition-delay:260ms" x="95" y="286" fill="#8C8378" font-size="12.5" text-anchor="middle">Le Ping</text>
+
+      <rect class="bar" style="transition-delay:130ms" x="175" y="118" width="86" height="128" rx="5" fill="#FF8A3D" opacity=".42"/>
+      <text class="num" data-to="15" x="218" y="104" fill="#F2EEE8" font-size="27" font-weight="800" text-anchor="middle">15</text>
+      <text class="lbl" style="transition-delay:390ms" x="218" y="268" fill="#D8D1C8" font-size="14.5" text-anchor="middle">pistes sorties</text>
+      <text class="lbl" style="transition-delay:390ms" x="218" y="286" fill="#8C8378" font-size="12.5" text-anchor="middle">Le Ping</text>
+
+      <rect class="gate" style="transition-delay:300ms" x="298" y="158" width="86" height="88" rx="5" fill="none" stroke="#F2EEE8" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text class="num" data-to="8" x="341" y="144" fill="#F2EEE8" font-size="27" font-weight="800" text-anchor="middle">8</text>
+      <text class="lbl" style="transition-delay:520ms" x="341" y="268" fill="#D8D1C8" font-size="14.5" text-anchor="middle">que tu gardes</text>
+      <text class="lbl" style="transition-delay:520ms" x="341" y="286" fill="#F2EEE8" font-size="12.5" text-anchor="middle">toi, à la main</text>
+
+      <rect class="bar" style="transition-delay:390ms" x="421" y="194" width="86" height="52" rx="5" fill="#FF8A3D" opacity=".72"/>
+      <text class="num" data-to="3" x="464" y="180" fill="#F2EEE8" font-size="27" font-weight="800" text-anchor="middle">3</text>
+      <text class="lbl" style="transition-delay:650ms" x="464" y="268" fill="#D8D1C8" font-size="14.5" text-anchor="middle">évaluées à fond</text>
+      <text class="lbl" style="transition-delay:650ms" x="464" y="286" fill="#8C8378" font-size="12.5" text-anchor="middle">Le Récif</text>
+
+      <rect class="bar win" style="transition-delay:520ms" x="544" y="216" width="86" height="30" rx="5" fill="#39C46E"/>
+      <text class="num" data-to="1" x="587" y="202" fill="#39C46E" font-size="27" font-weight="800" text-anchor="middle">1</text>
+      <text class="lbl" style="transition-delay:780ms" x="587" y="268" fill="#D8D1C8" font-size="14.5" text-anchor="middle">idée qui tient</text>
+      <text class="lbl" style="transition-delay:780ms" x="587" y="286" fill="#8C8378" font-size="12.5" text-anchor="middle">la carte</text>
+    </svg>
+    <ol class="fnl-cols" aria-hidden="true">
+      <li>éléments lus<code>Le Ping</code></li>
+      <li>pistes sorties<code>Le Ping</code></li>
+      <li class="me">que tu gardes<code>toi, à la main</code></li>
+      <li>évaluées à fond<code>Le Récif</code></li>
+      <li>idée qui tient<code>la carte</code></li>
+    </ol>
+  </div>
+  <p class="lead">La troisième colonne est la seule où c'est toi qui tranches. Tout ce qui est avant est de la récolte, tout ce qui est après est du calcul, et c'est ce tri-là que tu sauras faire à la fin.</p>
+  <div class="stack-s mid-cta">
+    <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+    <p class="undercta">Remboursé si tu ne trouves aucune idée de produit</p>
+  </div>
+</div></section>
+
+<section class="band light"><div class="in stack">
+  <h2>Tout pour refaire la méthode seul, sur tes marchés</h2>
+  <div class="mt-s">
+
+    <div class="get"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.3l5.2 3.7-5.2 3.7z"/></svg>
+      <div><h3>Six modules vidéo</h3><p>De l'installation jusqu'à la carte finale. Le module 4 est le cœur, c'est celui qui t'apprend à repérer un écho creux et à le chiffrer.</p>
+      <p class="mods">0. Installer le sonar<br>1. Le ping et l'écho<br>2. Où envoyer le ping<br>3. Le test de réalité<br>4. Lire l'écho<br>5. La carte et la barrière (ce qui empêche le suivant d'entrer derrière toi)</p></div></div>
+
+    <div class="get"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9.5l3 2.5-3 2.5M13.5 15H17"/></svg>
+      <div><h3>Les trois outils, prêts à installer</h3><p><b>/le-point</b> cadre ta recherche, <b>/le-ping</b> récolte les pistes, <b>/le-recif</b> évalue le marché. Trois minutes d'installation chacun. Ils tournent sur tes propres accès, et ils refusent de démarrer sans données réelles.</p></div></div>
+
+    <div class="get"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11.5" height="11.5" rx="2.5"/><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.5a2 2 0 0 0 2 2h2.5"/></svg>
+      <div><h3>Les prompts et la grille de décision</h3><p>Un prompt par étape, testé sur les quatre analyses. Tu colles, tu remplaces ton mot-clé, tu lances. Et la grille à imprimer, avec les seuils chiffrés exacts et les cas qui arrêtent tout.</p></div></div>
+
+    <div class="get"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.5a8 8 0 1 0-1.6 6"/><path d="M20.5 6.5v5h-5"/></svg>
+      <div><h3>Accès à vie et mises à jour</h3><p>Amazon change, les outils changent. Tu reçois les versions suivantes sans repayer.</p></div></div>
+
+  </div>
+  <div class="stack-s mid-cta">
+    <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+    <p class="undercta">Remboursé si tu ne trouves aucune idée de produit</p>
+  </div>
+</div></section>
+
+<section class="band alt" id="clement"><div class="in">
+  <div class="who">
+    <div class="who-pic">
+      <img class="me" src="img/clement.webp" width="760" height="732" alt="Clément, le vendeur derrière Le Sonar" loading="lazy" decoding="async">
+      <figure class="proof">
+        <img src="img/londres.webp" width="720" height="720" alt="Clément avec un badge Amazon, au premier événement Amazon Ads européen à Londres" loading="lazy" decoding="async">
+        <figcaption><b>Londres.</b> Premier événement Amazon Ads européen.</figcaption>
+      </figure>
+    </div>
+    <div class="stack">
+      <h2>Plus de six ans sur Amazon, et c'est comme ça que je cherche aujourd'hui</h2>
+      <p class="lead">Plus de six ans à vendre sur Amazon, <b>650 K$ de chiffre d'affaires</b> l'an dernier, trois marques lancées. Invité au siège d'Amazon France et au premier événement Amazon Ads européen à Londres.</p>
+      <p>Cette méthode est récente. Elle n'existait pas il y a un an, parce qu'elle repose sur des outils d'IA qui viennent de sortir. Lire des milliers d'avis, de posts et de fiches en une soirée, personne ne pouvait le faire à la main.</p>
+      <p>C'est avec elle que je choisis mes prochains produits. Et mes élèves en coaching l'utilisent déjà pour trouver les leurs.</p>
+      <p class="kick">Ce que tu apprends ici, je l'utilise pour mes propres lancements.</p>
+      <p class="muted">Mon coaching, c'est 2 500 € pour 12 heures à mes côtés, du choix du produit jusqu'au lancement. Le Sonar ne remplace pas ça. C'est uniquement l'étape de recherche, que tu fais seul, à ton rythme.</p>
+      <p class="muted">Et je sors une niche chiffrée par semaine dans ma newsletter, devant 1 600 personnes.</p>
+      <p class="todo">Emplacement témoignages, à remplir après les premiers accompagnements.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="band light"><div class="in stack">
+  <h2>Ce n'est pas pour tout le monde</h2>
+  <p class="lead">Cette formation ne t'apprend pas à vendre sur Amazon. Elle t'apprend à choisir quoi vendre, et elle s'arrête au verdict, juste avant que tu passes commande.</p>
+  <p class="muted">Si tu as déjà une formation complète et que tu bloques toujours à l'étape 1, c'est normal aussi. Un programme qui couvre le métier de A à Z ne peut pas consacrer six heures à la seule recherche de niche. Celle-ci ne fait que ça.</p>
+  <div class="grid2 mt-s">
+    <div class="card"><h3 class="qual-h no-h">Passe ton chemin si</h3>
+      <ul class="qual no">
+        <li>Tu veux une liste de produits gagnants prête à l'emploi. Je t'apprends à en trouver, je ne t'en donne aucun.</li>
+        <li>Tu veux qu'on te garantisse des ventes. Je garantis des pistes, pas que le marché les achètera.</li>
+        <li>Tu cherches le A à Z, du produit à la première vente. Le sourcing, le lancement et la pub sont ailleurs.</li>
+        <li>Une cinquantaine d'euros d'outils par mois te pose un problème. Sans eux, la méthode ne tourne pas.</li>
+      </ul></div>
+    <div class="card"><h3 class="qual-h yes-h">C'est pour toi si</h3>
+      <ul class="qual yes">
+        <li>Tu cherches ton premier produit depuis des mois et tu retombes toujours sur les mêmes.</li>
+        <li>Tu as déjà une formation, tu connais le métier, mais tu bloques sur le choix du produit.</li>
+        <li>Tu as lancé un produit qui tourne et tu cherches le deuxième.</li>
+        <li>Tu préfères une méthode qui dit non à une méthode qui promet.</li>
+      </ul></div>
+  </div>
+</div></section>
+
+<section class="band light alt" id="offre"><div class="in stack">
+  <h2>Seul, ou avec ma validation</h2>
+  <ol class="timeline" aria-label="Calendrier de la prévente">
+    <li><b>Dès l'achat</b><span>Les trois outils, à installer tout de suite</span></li>
+    <li class="now"><b>Dimanche 29 novembre, 23 h 59</b><span>Fin du prix de prévente <span class="cd" data-cd></span></span></li>
+    <li><b>Jeudi 10 décembre</b><span>Les six modules vidéo et les quatre analyses</span></li>
+  </ol>
+  <div class="grid2 mt-s">
+    <div class="card price-card hi">
+      <p class="slots">Prix de prévente, jusqu'au 29 novembre</p>
+      <h3>Le Sonar</h3>
+      <p class="big">199 € <s class="was">299 €</s></p>
+      <p class="muted">Les six modules, les quatre analyses, <b>les trois outils</b>, la grille de décision et tous les prompts. Accès à vie, mises à jour comprises.</p>
+      <a class="cta" href="#">Je prends Le Sonar <span class="price">199 €</span></a>
+    </div>
+    <div class="card price-card">
+      <p class="slots">10 places</p>
+      <h3>Le Sonar + ta piste validée</h3>
+      <p class="big">399 €</p>
+      <ul class="incl">
+        <li>Tout Le Sonar.</li>
+        <li>Tu fais tes dix analyses, je les relis une par une. Je te dis par écrit où ta lecture des chiffres est juste, et où elle te trompe.</li>
+        <li>Puis une heure en visio sur ta meilleure piste, avant que tu passes commande. Enregistrée, tu la gardes.</li>
+      </ul>
+      <p class="pitch">Tu ne mets pas 8 000 € dans un stock sans un deuxième avis.</p>
+      <p class="muted">Au tarif de mon coaching, l'heure de visio seule vaut plus de 200 €.</p>
+      <a class="cta ghost" href="#">Je prends la validation <span class="price">399 €</span></a>
+    </div>
+  </div>
+  <div class="guar-strip" id="garantie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.6"/></svg><span><b>Trouve une idée, ou remboursé.</b> Sur les deux options. Applique la méthode, et si tu ne trouves aucune idée de produit, je te rembourse. Les conditions exactes sont dans les CGV.</span></div>
+  <p class="fine"><b>Ce que je ne garantis pas, c'est une vente.</b> Ce que je contrôle, c'est que la méthode te sorte des idées à évaluer, et c'est là-dessus que je m'engage.</p>
+  <p class="fine"><b>199 €, c'est le prix de prévente.</b> Tu as les trois outils tout de suite, les vidéos le jeudi 10 décembre, et le prix passe à 299 € le lundi 30 novembre.</p>
+  <p class="fine"><b>Dix places sur la validation.</b> Lire dix analyses et y répondre me prend deux heures par personne. Quand les dix sont prises, je ferme au lieu de bâcler.</p>
+  <p class="todo">Les deux boutons pointent vers « # ». À relier au paiement Schoolmaker ou Stripe.</p>
+</div></section>
+
+<section class="band light"><div class="in stack">
+  <h2>Ce qu'on me demande</h2>
+  <div class="mt-s">
+    <details><summary>Quand est-ce que j'ai accès ?</summary><p>Les trois outils tout de suite après l'achat, pour commencer à chercher. Les six modules vidéo et les quatre analyses le jeudi 10 décembre. C'est une prévente, d'où le prix.</p></details>
+    <details><summary>Il faut savoir coder ?</summary><p>Non, et tu n'écriras jamais une ligne de code. Tu colles une clé, tu te connectes, et tu poses tes questions en français. Le premier module montre chaque clic, sans accéléré.</p></details>
+    <details><summary>C'est encore un truc à base d'IA ?</summary><p>L'IA, c'est la plomberie. Ce qui change ta recherche, c'est d'avoir plus de sources que les seules données Amazon. L'IA sert à traiter ce volume sans y passer la semaine, et c'est tout.</p><p>Elle ne décide rien non plus. Les trois outils refusent même de démarrer sans données réelles, parce qu'un outil qui invente des chiffres fait plus de dégâts que pas d'outil du tout.</p></details>
+    <details><summary>Ça coûte combien en plus ?</summary><p><b>Une cinquantaine d'euros par mois</b>, pour les trois accès que la méthode demande. L'IA, un accès aux données Amazon, et un accès aux sources hors d'Amazon. Il te faut aussi un ordinateur.</p><p>Si tu me vois annoncer une fourchette plus large ailleurs, c'est qu'elle couvre toute ma panoplie de vendeur. Le Sonar n'a besoin que de ces trois-là.</p><p>On travaille dans l'onglet Code de l'application Claude, parce que c'est le seul endroit où tes résultats deviennent des fichiers et tes prompts des raccourcis. Le nom fait peur, le contenu non.</p></details>
+    <details><summary>Il faut déjà vendre sur Amazon ?</summary><p>Non, et c'est même plus simple si tu ne vends pas encore. Toute la méthode tourne sur des données publiques, tu n'as besoin d'aucun compte vendeur.</p></details>
+    <details><summary>Combien de temps pour une piste ?</summary><p>Deux à trois heures pour une piste qui tient la route. Cinq minutes pour celles qui ne valent rien, et c'est la majorité. Les premières fois, compte plus.</p></details>
+    <details><summary>C'est éligible au CPF ?</summary><p>Non.</p></details>
+  </div>
+  <p class="fine mt-m">Si c'est le A à Z que tu cherches et pas seulement la recherche de niche, j'ai monté <a class="link" href="https://formation.stupid-seller.com/" target="_blank" rel="noopener">l'Alliance FBA</a> avec Seb de Liberté Digitale. Les deux se complètent, et tu n'as pas besoin des deux pour commencer.</p>
+</div></section>
+
+<footer class="band hero foot">
+  <div class="rings" aria-hidden="true"></div>
+  <div class="in stack footer-in">
+    <h2>La prochaine fois que tu ouvres ton outil</h2>
+    <p class="lead">Tu peux recocher les mêmes cases et retomber sur les mêmes trente produits. Ou tu peux passer une soirée à chercher là où personne ne regarde, et commander en sachant pourquoi.</p>
+    <div class="stack-s">
+      <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+      <p class="undercta">Remboursé si tu ne trouves aucune idée de produit</p>
+    </div>
+    <p class="undercta mt-m">Clément · Stupid Seller</p>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar" inert>
+  <p class="mbar-cd">Prévente <b>199 €</b> · fin dans <span class="cd" data-cd></span></p>
+  <a class="cta" href="#offre">Je prends Le Sonar <span class="price">199 €</span></a>
+</div>
+
+<script>
+/* Compte a rebours de la prevente. Sans JS, la date en clair suffit. */
+(function () {
+  var end = new Date('2026-11-29T23:59:59+01:00').getTime();
+  var els = [].slice.call(document.querySelectorAll('[data-cd]'));
+  if (!els.length || isNaN(end)) return;
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function tick() {
+    var left = end - Date.now();
+    var txt;
+    if (left <= 0) { txt = 'Prévente terminée'; }
+    else {
+      var d = Math.floor(left / 864e5), h = Math.floor(left / 36e5) % 24, m = Math.floor(left / 6e4) % 60, sec = Math.floor(left / 1e3) % 60;
+      txt = (d ? d + '\u202fj ' : '') + pad(h) + '\u202fh ' + pad(m) + '\u202fmin ' + pad(sec) + '\u202fs';
+    }
+    els.forEach(function (e) { e.textContent = txt; });
+    if (left > 0) setTimeout(tick, 1000);
+  }
+  tick();
+})();
+</script>
+
+<script>
+/* Barre d'achat mobile. Visible seulement quand aucun autre bouton d'achat,
+   ni l'offre, ni le pied de page n'est a l'ecran. */
+(function () {
+  var bar = document.getElementById('mbar');
+  if (!bar) return;
+  var watched = [].slice.call(document.querySelectorAll('.cta:not(#mbar .cta), #offre, footer'));
+  var queued = false;
+  function inView(el) {
+    var r = el.getBoundingClientRect();
+    return r.bottom > 0 && r.top < window.innerHeight;
+  }
+  function update() {
+    queued = false;
+    var show = window.scrollY > 200 && !watched.some(inView);
+    bar.classList.toggle('on', show);
+    if (show) bar.removeAttribute('inert'); else bar.setAttribute('inert', '');
+  }
+  function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  update();
+})();
+</script>
+
+<script>
+/* Rejoue de /le-point. Tout est visible par defaut. On ne cache les lignes
+   qu'au moment de les jouer, et un filet affiche tout si les frames ne viennent pas. */
+(function () {
+  var t = document.getElementById('term'), btn = document.getElementById('replay');
+  if (!t || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var lines = [].slice.call(t.querySelectorAll('.ln'));
+  var plain = lines.map(function (l) { return l.textContent; });
+  var timers = [];
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function showAll() {
+    timers.forEach(clearTimeout); timers = [];
+    lines.forEach(function (l, i) { if (l.classList.contains('a')) l.textContent = plain[i]; l.classList.remove('typing'); l.classList.add('shown'); });
+    if (btn) btn.hidden = false;
+  }
+  function play() {
+    timers.forEach(clearTimeout); timers = [];
+    t.classList.add('anim');
+    lines.forEach(function (l, i) { if (l.classList.contains('a')) l.textContent = plain[i]; l.classList.remove('shown', 'typing'); });
+    var at = 250;
+    lines.forEach(function (l, i) {
+      if (l.classList.contains('a')) {
+        var txt = plain[i], step = 40;
+        later(function () { l.textContent = ''; l.classList.add('shown', 'typing'); }, at);
+        for (var k = 1; k <= txt.length; k++) (function (k) {
+          later(function () { l.textContent = txt.slice(0, k); }, at + k * step);
+        })(k);
+        at += txt.length * step + 120;
+        later(function () { l.classList.remove('typing'); l.textContent = txt; }, at);
+        at += 360;
+      } else {
+        later(function () { l.classList.add('shown'); }, at);
+        at += l.classList.contains('q') ? 620 : 500;
+      }
+    });
+    later(function () { if (btn) btn.hidden = false; }, at);
+    later(showAll, at + 4000);
+  }
+  if (btn) btn.addEventListener('click', function () { btn.hidden = true; play(); });
+  var io = new IntersectionObserver(function (e) {
+    if (e[0].isIntersecting) { io.disconnect(); play(); }
+  }, { threshold: 0.45 });
+  io.observe(t);
+})();
+</script>
+
+<script>
+/* Entonnoir anime. Regle de securite : la page montre l'etat FINAL par defaut.
+   On ne masque les barres qu'au moment ou on est certain de pouvoir les animer,
+   juste avant de jouer la transition. Si le script ou l'observer ne tourne pas,
+   le visiteur voit les vrais chiffres au lieu de cinq zeros. */
+(function () {
+  var f = document.querySelector('.fnl');
+  if (!f || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var nums = [].slice.call(f.querySelectorAll('.num'));
+  var done = false;
+
+  function finish() {
+    f.classList.add('on');
+    nums.forEach(function (n) { n.textContent = n.getAttribute('data-to'); });
+  }
+
+  function play() {
+    if (done) return;
+    done = true;
+
+    f.classList.add('anim');          // etat de depart, barres ecrasees
+    nums.forEach(function (n) { n.textContent = '0'; });
+
+    function go() { f.classList.add('on'); }   // idempotent
+    requestAnimationFrame(function () { requestAnimationFrame(go); });
+    setTimeout(go, 140);              // si les frames ne viennent pas, on part quand meme
+
+    nums.forEach(function (n, i) {
+      var to = +n.getAttribute('data-to'), t0 = null, dur = 780;
+      setTimeout(function () {
+        requestAnimationFrame(function step(ts) {
+          if (t0 === null) t0 = ts;
+          var q = Math.min(1, (ts - t0) / dur);
+          n.textContent = Math.round(to * (1 - Math.pow(1 - q, 3)));
+          if (q < 1) requestAnimationFrame(step); else n.textContent = to;
+        });
+      }, i * 130);
+    });
+
+    setTimeout(finish, 3200);         // filet si les frames n'arrivent pas
+  }
+
+  var io = new IntersectionObserver(function (e) {
+    if (e[0].isIntersecting) { play(); io.disconnect(); }
+  }, { threshold: 0.3 });
+  io.observe(f);
+})();
+</script>
+</body></html>
