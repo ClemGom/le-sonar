@@ -35,8 +35,8 @@ de `netlify.toml` le supprime avant la mise en ligne. Garde cette commande.
 - Le bouton de la carte 199 € pointe vers le paiement ThriveCart
   https://stupid-seller.thrivecart.com/sonar/ . Les autres boutons « Je prends
   Le Sonar » renvoient vers l'offre (#offre).
-- **Le bouton 399 € (« Je prends la validation ») pointe encore vers `#`** :
-  il manque le lien ThriveCart de cette offre.
+- Le bouton 399 € (« Je prends la validation ») pointe vers
+  https://stupid-seller.thrivecart.com/sonar-rel/ .
 - Plus aucune note interne (`class="todo"`) n'est visible sur la page.
 - À minuit le 29 novembre, la page passe seule à 299 € ; le prix ThriveCart
   doit être changé au même moment, côté ThriveCart.
