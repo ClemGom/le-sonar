@@ -30,13 +30,13 @@ seraient publiquement accessibles.
 Ce `CLAUDE.md` est suivi dans Git mais n'est pas servi : la commande de build
 de `netlify.toml` le supprime avant la mise en ligne. Garde cette commande.
 
-## État au 18 novembre 2026
+## État au 21 novembre 2026
 
-Deux blocs `class="todo"` sont encore dans la page et **visibles par les
-visiteurs** :
-
-- l'emplacement des témoignages
-- **les deux boutons d'achat, qui pointent vers `#`**
-
-Le second est bloquant pour un lancement. Tant qu'il est là, la page ne
-devrait pas être indexée.
+- Le bouton de la carte 199 € pointe vers le paiement ThriveCart
+  https://stupid-seller.thrivecart.com/sonar/ . Les autres boutons « Je prends
+  Le Sonar » renvoient vers l'offre (#offre).
+- **Le bouton 399 € (« Je prends la validation ») pointe encore vers `#`** :
+  il manque le lien ThriveCart de cette offre.
+- Plus aucune note interne (`class="todo"`) n'est visible sur la page.
+- À minuit le 29 novembre, la page passe seule à 299 € ; le prix ThriveCart
+  doit être changé au même moment, côté ThriveCart.
