@@ -175,6 +175,33 @@ summary:focus-visible{outline:2px solid var(--amber-t);outline-offset:2px}
 .leg{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;font-size:16px;color:var(--muted)}
 .leg span{display:flex;align-items:center;gap:9px}
 .leg i{width:11px;height:11px;border-radius:50%;flex:none}
+.mapwrap{position:relative}
+.pt{cursor:pointer;transition:r .12s ease}
+.pt.on{stroke:var(--fg);stroke-width:2.5}
+.hit{fill:transparent;cursor:pointer}
+.tip{position:absolute;pointer-events:none;opacity:0;transform:translate(-50%,-118%);
+  transition:opacity .12s ease;background:#121110;border:1px solid var(--line);
+  border-radius:9px;padding:9px 12px;min-width:148px;z-index:5;
+  box-shadow:0 12px 32px rgba(0,0,0,.6)}
+.tip.on{opacity:1}
+.tip .nm{font-weight:700;font-size:15px;margin-bottom:5px;color:var(--fg)}
+.tip .rw{font-family:var(--mono);font-size:12.5px;color:var(--muted);
+  display:flex;justify-content:space-between;gap:18px;line-height:1.7}
+.tip .rw b{color:var(--fg);font-weight:600}
+.tip.good .nm{color:var(--green)}
+.carte .hint{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--faint);text-align:center;margin:14px 0 0}
+.verdict{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--green);
+  border-radius:14px;padding:22px 24px;margin-top:16px}
+.vtop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.vlab{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint)}
+.badge{font-family:var(--mono);font-size:13.5px;font-weight:700;letter-spacing:.12em;
+  color:var(--green);border:1px solid var(--green);border-radius:6px;padding:5px 13px}
+.verdict p{margin:0 0 9px;font-size:17px;line-height:1.58;max-width:58ch}
+.verdict p:last-child{margin-bottom:0}
+.verdict .num{font-family:var(--mono);font-weight:600}
+@media (max-width:640px){.verdict{padding:18px 16px}.verdict p{font-size:16px}}
 @media (max-width:640px){.carte{padding:16px 10px 12px}}
 .zones,.fnl-cols{display:none}
 @media (max-width:620px){
@@ -341,7 +368,7 @@ p{text-wrap:pretty}
   --amber-t:#963A04;--green:#125F32;--red:#C21F27;background:var(--ink);color:var(--fg);color-scheme:light}
 .light.alt{background:var(--ink-2)}
 .light .card,.light .video,.light .test{box-shadow:0 1px 0 rgba(26,23,20,.04),0 8px 24px -16px rgba(26,23,20,.25)}
-.light .fig,.light .carte{--panel:#171512;--line:#2A2622;--fg:#F2EEE8;--muted:#9A9186;--faint:#8C8378;--amber-t:#FF8A3D;--green:#39C46E;--red:#F0434A;
+.light .fig,.light .carte,.light .verdict{--panel:#171512;--line:#2A2622;--fg:#F2EEE8;--muted:#9A9186;--faint:#8C8378;--amber-t:#FF8A3D;--green:#39C46E;--red:#F0434A;
   color:var(--fg);box-shadow:0 18px 40px -24px rgba(26,23,20,.55)}
 .light .todo{border-color:#CDBFAB}
 .light ::selection{background:rgba(255,138,61,.3);color:#1A1714}
@@ -541,59 +568,47 @@ p{text-wrap:pretty}
   <p class="lead">Là, tu reviens sur Amazon, cette fois pour juger.</p>
   <p>Le Récif passe chaque piste au crible. La taille du rayon, la marge qu'il reste une fois la pub payée, la place pour un nouveau, et ce qui te protégera quand d'autres arriveront.</p>
   <p>Une condition qui tombe, et la piste s'arrête là. <b>Tu passes à la suivante sans avoir dépensé un euro.</b></p>
-    <p class="muted">Pour trancher, tu sors la carte du rayon.</p>
+  <p class="muted">À quoi ressemble une idée validée. Exemple avec des chiffres inventés, survole un point.</p>
   <div class="carte">
-    <svg viewBox="0 0 680 430" role="img" aria-label="Carte du rayon, ventes mensuelles en fonction du nombre d'avis">
-      <rect x="72" y="36" width="255" height="150" fill="#39C46E" opacity=".10" rx="8"/>
-      <rect x="412" y="36" width="238" height="150" fill="#FF8A3D" opacity=".10" rx="8"/>
-      <rect x="412" y="232" width="238" height="130" fill="#F0434A" opacity=".10" rx="8"/>
-      <line x1="72" y1="362" x2="660" y2="362" stroke="#2A2622" stroke-width="1.5"/>
-      <line x1="72" y1="30" x2="72" y2="362" stroke="#2A2622" stroke-width="1.5"/>
-      <circle cx="150" cy="300" r="5" fill="#4A443D"/>
-      <circle cx="196" cy="330" r="5" fill="#4A443D"/>
-      <circle cx="243" cy="276" r="5" fill="#4A443D"/>
-      <circle cx="290" cy="316" r="5" fill="#4A443D"/>
-      <circle cx="340" cy="248" r="5" fill="#4A443D"/>
-      <circle cx="360" cy="330" r="5" fill="#4A443D"/>
-      <circle cx="383" cy="200" r="5" fill="#4A443D"/>
-      <circle cx="390" cy="290" r="5" fill="#4A443D"/>
-      <circle cx="250" cy="218" r="5" fill="#4A443D"/>
-      <circle cx="355" cy="130" r="5" fill="#4A443D"/>
-      <circle cx="395" cy="96" r="5" fill="#4A443D"/>
-      <circle cx="470" cy="76" r="7.5" fill="#FF8A3D"/>
-      <circle cx="530" cy="104" r="7.5" fill="#FF8A3D"/>
-      <circle cx="600" cy="64" r="7.5" fill="#FF8A3D"/>
-      <circle cx="450" cy="318" r="6.5" fill="#F0434A"/>
-      <circle cx="510" cy="302" r="6.5" fill="#F0434A"/>
-      <circle cx="570" cy="338" r="6.5" fill="#F0434A"/>
-      <circle cx="618" cy="310" r="6.5" fill="#F0434A"/>
-      <circle cx="140" cy="96" r="9" fill="#39C46E"/>
-      <circle cx="232" cy="68" r="9" fill="#39C46E"/>
-      <text class="zl" x="88" y="152" fill="#39C46E" font-size="19" font-weight="700">Ce que tu cherches</text>
-      <text class="zl" x="88" y="172" fill="#9A9186" font-size="16">peu d'avis, et déjà des ventes</text>
-      <text class="zl" x="428" y="152" fill="#FF8A3D" font-size="19" font-weight="700">Les gros installés</text>
-      <text class="zl" x="428" y="172" fill="#9A9186" font-size="16">ils amènent les acheteurs</text>
-      <text class="zl" x="428" y="258" fill="#F0434A" font-size="19" font-weight="700">La saturation</text>
-      <text class="zl" x="428" y="278" fill="#9A9186" font-size="16">beaucoup d'avis, peu de ventes</text>
-      <text class="ax" x="366" y="400" fill="#9A9186" font-size="17" text-anchor="middle">Nombre d'avis</text>
-      <text class="ax" x="92" y="382" fill="#8C8378" font-size="14">peu</text>
-      <text class="ax" x="645" y="382" fill="#8C8378" font-size="14" text-anchor="end">beaucoup</text>
-      <text class="ax" x="0" y="0" fill="#9A9186" font-size="17" text-anchor="middle" transform="translate(26,196) rotate(-90)">Ventes par mois</text>
-    </svg>
+    <div class="mapwrap">
+      <svg viewBox="0 0 680 430" role="img" aria-label="Exemple de carte, ventes mensuelles en fonction du nombre d'avis">
+        <rect x="72" y="36" width="255" height="150" fill="#39C46E" opacity=".10" rx="8"/>
+        <rect x="412" y="36" width="238" height="150" fill="#FF8A3D" opacity=".10" rx="8"/>
+        <rect x="412" y="232" width="238" height="130" fill="#F0434A" opacity=".10" rx="8"/>
+        <line x1="72" y1="362" x2="660" y2="362" stroke="#2A2622" stroke-width="1.5"/>
+        <line x1="72" y1="30" x2="72" y2="362" stroke="#2A2622" stroke-width="1.5"/>
+        <g id="sonar-pts"></g>
+        <text class="zl" x="88" y="64" fill="#39C46E" font-size="19" font-weight="700">Il reste de la place</text>
+        <text class="zl" x="428" y="152" fill="#FF8A3D" font-size="19" font-weight="700">Les gros installés</text>
+        <text class="zl" x="428" y="258" fill="#F0434A" font-size="19" font-weight="700">La saturation</text>
+        <text class="ax" x="366" y="400" fill="#9A9186" font-size="17" text-anchor="middle">Nombre d'avis</text>
+        <text class="ax" x="92" y="382" fill="#8C8378" font-size="14">peu</text>
+        <text class="ax" x="645" y="382" fill="#8C8378" font-size="14" text-anchor="end">beaucoup</text>
+        <text class="ax" x="0" y="0" fill="#9A9186" font-size="17" text-anchor="middle" transform="translate(26,196) rotate(-90)">Ventes par mois</text>
+      </svg>
+      <div class="tip" id="sonar-tip">
+        <div class="nm"></div>
+        <div class="rw"><span>Avis</span><b class="a"></b></div>
+        <div class="rw"><span>Ventes/mois</span><b class="v"></b></div>
+      </div>
+    </div>
     <ul class="zones">
-      <li style="--z:#39C46E"><b>Ce que tu cherches</b><span>peu d'avis, et déjà des ventes</span></li>
+      <li style="--z:#39C46E"><b>Il reste de la place</b><span>peu d'avis, et déjà des ventes</span></li>
       <li style="--z:#FF8A3D"><b>Les gros installés</b><span>ils amènent les acheteurs</span></li>
       <li style="--z:#F0434A"><b>La saturation</b><span>beaucoup d'avis, peu de ventes</span></li>
     </ul>
-    <div class="leg">
-      <span><i style="background:#39C46E"></i> Les entrants qui prouvent la porte</span>
-      <span><i style="background:#FF8A3D"></i> Les grandes marques</span>
-      <span><i style="background:#F0434A"></i> Ceux qui ont travaillé pour rien</span>
-      <span><i style="background:#4A443D"></i> Le reste du rayon</span>
-    </div>
+    <p class="hint">Chiffres d'exemple</p>
   </div>
-  <p>Chaque point est un produit déjà en vente, et la lecture se fait en deux temps. <b>Personne en haut à gauche</b>, et le rayon n'accueille plus de nouveaux. <b>Deux ou trois marques récentes</b>, et tu sais que tu peux entrer.</p>
-  <p class="muted">Mais s'ils sont dix, la porte est devenue un couloir. Tu peux entrer, et rien ne se refermera derrière toi. C'est là que la plupart des gens commandent quand même.</p>
+  <div class="verdict">
+    <div class="vtop">
+      <span class="vlab">Le Récif a tranché</span>
+      <span class="badge">PLACE</span>
+    </div>
+    <p>Trois marques récentes font déjà des ventes avec moins de <span class="num">120</span>&nbsp;avis.</p>
+    <p>Le marché est défendable. Il manque trois barrières, et les deux moins chères tiennent dans <span class="num">1 200 €</span>.</p>
+    <p>Entrer coûte environ <span class="num">4 100 €</span>, premier stock compris.</p>
+  </div>
+  <p class="muted">S'ils sont dix à être entrés récemment, la porte est devenue un couloir. Tu peux entrer, et rien ne se refermera derrière toi. C'est là que la plupart des gens commandent quand même.</p>
   <p>Et si elle tient, tu sais ce que ça te coûtera vraiment d'y entrer, et tu passes à la suite, le fournisseur.</p>
   <p class="kick">À la fin, une idée qui tient, et tu sais pourquoi.</p>
 </div></section>
@@ -967,6 +982,76 @@ p{text-wrap:pretty}
     if (e[0].isIntersecting) { play(); io.disconnect(); }
   }, { threshold: 0.3 });
   io.observe(f);
+})();
+</script>
+<script>
+(function(){
+  var D=[
+    {n:"Brandel",a:4200,v:96000,x:618,y:52, t:"big"},
+    {n:"Kalo\u00e9", a:2900,v:74000,x:575,y:77, t:"big"},
+    {n:"Vossia", a:1850,v:61500,x:522,y:95, t:"big"},
+    {n:"Prenko", a:1400,v:7800, x:489,y:297,t:"sat"},
+    {n:"Sorvel", a:960, v:6400, x:445,y:316,t:"sat"},
+    {n:"Alvay",  a:2100,v:5200, x:537,y:336,t:"sat"},
+    {n:"Nessar", a:430, v:14600,x:351,y:236,t:"rest"},
+    {n:"Yoralis",a:620, v:9700, x:394,y:275,t:"rest"},
+    {n:"Camsia", a:180, v:8900, x:249,y:284,t:"rest"},
+    {n:"Dunako", a:290, v:11300,x:305,y:261,t:"rest"},
+    {n:"Rifko",  a:95,  v:6200, x:174,y:319,t:"rest"},
+    {n:"Kovira", a:74,  v:38400,x:144,y:141,t:"good"},
+    {n:"Tandrel",a:58,  v:31500,x:116,y:161,t:"good"},
+    {n:"Melsio", a:112, v:28900,x:193,y:169,t:"good"}
+  ];
+  var S={good:{f:"#39C46E",r:9},big:{f:"#FF8A3D",r:7.5},sat:{f:"#F0434A",r:6.5},rest:{f:"#4A443D",r:5}};
+  var NS="http://www.w3.org/2000/svg";
+  var g=document.getElementById("sonar-pts"), tip=document.getElementById("sonar-tip");
+  if(!g||!tip) return;
+  var wrap=tip.parentNode, cur=null, curR=0;
+  var nf=(window.Intl&&Intl.NumberFormat)?new Intl.NumberFormat("fr-FR"):{format:function(x){return String(x);}};
+
+  function close(){
+    tip.className="tip";
+    if(cur){cur.setAttribute("r",curR);cur.setAttribute("class","pt");cur=null;}
+  }
+  function open(d,c,s){
+    if(cur&&cur!==c){cur.setAttribute("r",curR);cur.setAttribute("class","pt");}
+    cur=c; curR=s.r;
+    c.setAttribute("r",s.r+2.5); c.setAttribute("class","pt on");
+    tip.querySelector(".nm").textContent=d.n;
+    tip.querySelector(".a").textContent=nf.format(d.a);
+    tip.querySelector(".v").textContent=nf.format(d.v)+" $";
+    var b=wrap.getBoundingClientRect(), q=c.getBoundingClientRect();
+    tip.style.left=(q.left-b.left+q.width/2)+"px";
+    tip.style.top=(q.top-b.top)+"px";
+    tip.className="tip on"+(d.t==="good"?" good":"");
+  }
+
+  var made=[];
+  for(var k=0;k<D.length;k++){
+    var d=D[k], s=S[d.t];
+    var c=document.createElementNS(NS,"circle");
+    c.setAttribute("cx",d.x);c.setAttribute("cy",d.y);
+    c.setAttribute("r",s.r);c.setAttribute("fill",s.f);c.setAttribute("class","pt");
+    var t=document.createElementNS(NS,"title");
+    t.textContent=d.n+" \u2014 "+nf.format(d.a)+" avis, "+nf.format(d.v)+" $ par mois";
+    c.appendChild(t); g.appendChild(c);
+    made.push([d,c,s]);
+  }
+  made.forEach(function(it){
+    var d=it[0],c=it[1],s=it[2];
+    var hit=document.createElementNS(NS,"circle");
+    hit.setAttribute("cx",d.x);hit.setAttribute("cy",d.y);
+    hit.setAttribute("r",17);hit.setAttribute("class","hit");
+    hit.addEventListener("mouseenter",function(){open(d,c,s);});
+    hit.addEventListener("mouseleave",close);
+    hit.addEventListener("click",function(e){e.preventDefault();open(d,c,s);});
+    hit.addEventListener("touchstart",function(e){e.preventDefault();open(d,c,s);},{passive:false});
+    g.appendChild(hit);
+  });
+  document.addEventListener("click",function(e){
+    if(!e.target.closest||!e.target.closest("#sonar-pts")) close();
+  });
+  window.addEventListener("resize",close);
 })();
 </script>
 </body></html>

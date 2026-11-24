@@ -8,3 +8,7 @@ PRODUCT.md
 
 .DS_Store
 Thumbs.db
+
+# Sauvegardes locales et config de serveur local
+*.bak
+.claude/launch.json
