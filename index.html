@@ -172,6 +172,10 @@ summary:focus-visible{outline:2px solid var(--amber-t);outline-offset:2px}
 .todo{font-family:var(--mono);font-size:12px;color:var(--faint);border:1px dashed var(--line);border-radius:8px;padding:10px 12px}
 
 /* carte du rayon */
+.shot{margin:20px 0 0;max-width:700px}
+.shot img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:12px}
+.shot figcaption{margin-top:10px;font-size:16px}
+.light .shot img{border-color:#CDBFAB}
 .carte{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 20px 16px}
 .carte.fnl{padding:26px 20px 18px}
 .carte svg{width:100%;height:auto;display:block}
@@ -556,6 +560,10 @@ p{text-wrap:pretty}
     </div>
   </div>
   <p class="lead">Là, tu reviens sur Amazon, cette fois pour juger.</p>
+  <figure class="shot">
+    <img src="img/capture-francais.webp" width="1024" height="400" alt="Une question tapée en français dans Claude, est-ce qu'il reste de la place sur le marché des range-couvercles de casseroles aux États-Unis, et Le Récif qui se met à travailler" loading="lazy" decoding="async">
+    <figcaption class="muted">Tu poses la question en français. Il va chercher les chiffres et travaille tout seul.</figcaption>
+  </figure>
   <p>Le Récif passe chaque piste au crible. La taille du rayon, la marge qu'il reste une fois la pub payée, la place pour un nouveau, et ce qui te protégera quand d'autres arriveront.</p>
   <p>Une condition qui tombe, et la piste s'arrête là. <b>Tu passes à la suivante sans avoir dépensé un euro.</b></p>
   <p class="muted">À quoi ressemble une idée validée. Exemple avec des chiffres inventés, survole un point.</p>
